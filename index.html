@@ -696,6 +696,53 @@
   }
   #cs-pw-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
 
+  /* Discount popup */
+  #cs-discount-popup {
+    position: absolute;
+    bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a;
+    border: 1px solid rgba(236,64,122,0.3);
+    border-radius: 14px;
+    padding: 20px 28px;
+    display: flex; align-items: center; gap: 16px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    z-index: 100000;
+  }
+  #cs-discount-popup.show {
+    opacity: 1; transform: translateX(-50%) translateY(0);
+    pointer-events: all;
+  }
+  .cs-disc-icon {
+    font-size: 1.4rem; line-height: 1; flex-shrink: 0;
+  }
+  .cs-disc-text {
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .cs-disc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem; letter-spacing: 0.08em;
+    color: #EC407A;
+  }
+  .cs-disc-sub {
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.45);
+  }
+  .cs-disc-close {
+    background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,0.25); font-size: 1rem;
+    padding: 4px; margin-left: 8px;
+    transition: color 0.2s;
+    align-self: flex-start;
+  }
+  .cs-disc-close:hover { color: rgba(255,255,255,0.6); }
+
+  @media (max-width: 580px) {
+    #cs-discount-popup { bottom: 24px; padding: 16px 18px; gap: 12px; white-space: normal; max-width: calc(100vw - 32px); }
+  }
+
   /* Password modal */
   #cs-modal-bg {
     position: fixed; inset: 0; z-index: 100001;
@@ -786,6 +833,15 @@
       <span class="cs-label">Seconds</span>
     </div>
   </div>
+  <!-- Discount popup -->
+  <div id="cs-discount-popup">
+    <div class="cs-disc-icon">🏷️</div>
+    <div class="cs-disc-text">
+      <div class="cs-disc-title">10% off — exclusive access</div>
+      <div class="cs-disc-sub">Early access members get 10% off on launch day.</div>
+    </div>
+    <button class="cs-disc-close" aria-label="Close">✕</button>
+  </div>
 </div>
 
 <!-- Password modal -->
@@ -867,7 +923,7 @@
             <li>Sizes XXS — XXXL</li>
             <li>Black / Off White / Ash Grey</li>
           </ul>
-          <a href="#join" class="btn btn-fill">GET NOTIFIED</a>
+          <button class="btn btn-fill add-to-basket" data-product="SYLUM DRIP TEE — €69">Add to Basket</button>
         </article>
 
         <!-- HOODIE -->
@@ -884,7 +940,7 @@
             <li>Side B: Purple / Black drip logo</li>
             <li>Sizes XXS — XXXL</li>
           </ul>
-          <a href="#join" class="btn btn-fill">GET NOTIFIED</a>
+          <button class="btn btn-fill add-to-basket" data-product="SYLUM REVERSIBLE HOODIE — €149">Add to Basket</button>
         </article>
 
       </div>
@@ -1156,6 +1212,30 @@
     overlay.addEventListener('click', closeCart);
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeCart();
+    });
+  })();
+
+  /* ─── Discount popup (coming soon) ─────────────────── */
+  (function() {
+    var popup    = document.getElementById('cs-discount-popup');
+    var closeBtn = popup.querySelector('.cs-disc-close');
+    setTimeout(function() { popup.classList.add('show'); }, 1500);
+    closeBtn.addEventListener('click', function() {
+      popup.classList.remove('show');
+    });
+  })();
+
+  /* ─── Add to Basket ─────────────────────────────────── */
+  (function() {
+    document.querySelectorAll('.add-to-basket').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var product = btn.getAttribute('data-product');
+        // Future: add item to cart state
+        // For now: open the cart drawer to show empty state
+        document.getElementById('cart-overlay').classList.add('open');
+        document.getElementById('cart-drawer').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
     });
   })();
 
