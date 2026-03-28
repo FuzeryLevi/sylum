@@ -68,6 +68,7 @@
 
     .nav-links {
       display: flex; gap: 40px; list-style: none;
+      margin-right: auto; margin-left: 48px;
     }
     .nav-links a {
       font-size: 0.67rem; font-weight: 600;
@@ -84,6 +85,30 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-links a:hover::after { width: 100%; }
+
+    .nav-cart {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      padding: 8px;
+      transition: color 0.22s;
+    }
+    .nav-cart:hover { color: var(--text); }
+    .cart-count {
+      position: absolute; top: 0; right: 0;
+      background: var(--acc);
+      color: #fff;
+      font-size: 0.52rem; font-weight: 700;
+      line-height: 1;
+      min-width: 16px; height: 16px;
+      border-radius: 100px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+      opacity: 0;
+      transition: opacity 0.2s, background-color var(--t);
+    }
+    .cart-count.has-items { opacity: 1; }
 
     /* ═══ HERO ════════════════════════════════════════════ */
     .s-hero {
@@ -456,6 +481,7 @@
     @media (max-width: 960px) {
       nav { padding: 12px 24px; }
       #nav-logo { height: 72px; }
+      .nav-links { margin-left: 28px; gap: 24px; }
       .container { padding: 0 28px; }
       .s-section { padding: 80px 0; }
       .section-title { margin-bottom: 40px; }
@@ -469,7 +495,7 @@
     @media (max-width: 580px) {
       nav { padding: 10px 16px; }
       #nav-logo { height: 54px; }
-      .nav-links { gap: 16px; }
+      .nav-links { gap: 16px; margin-left: 16px; }
       .nav-links a { font-size: 0.6rem; letter-spacing: 0.14em; }
       .container { padding: 0 16px; }
       .s-section { padding: 56px 0; }
@@ -685,6 +711,14 @@
     <li><a href="#sizes">Size Guide</a></li>
     <li><a href="#join">Join</a></li>
   </ul>
+  <button class="nav-cart" aria-label="Cart">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+    <span class="cart-count">0</span>
+  </button>
 </nav>
 
 <main>
