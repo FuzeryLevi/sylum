@@ -454,22 +454,222 @@
 
     /* ═══ RESPONSIVE ══════════════════════════════════════ */
     @media (max-width: 960px) {
-      nav { padding: 15px 24px; }
+      nav { padding: 12px 24px; }
+      #nav-logo { height: 72px; }
       .container { padding: 0 28px; }
-      .product-grid { grid-template-columns: 1fr; }
+      .s-section { padding: 80px 0; }
+      .section-title { margin-bottom: 40px; }
+      .product-grid { grid-template-columns: 1fr; gap: 20px; }
+      .card-img { height: 280px; }
       .size-intro { grid-template-columns: 1fr; gap: 40px; }
-      footer { flex-direction: column; text-align: center; }
+      .cta-inner { padding: 80px 24px; }
+      footer { flex-direction: column; text-align: center; gap: 24px; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
     }
     @media (max-width: 580px) {
-      nav { padding: 14px 18px; }
-      .nav-links { gap: 18px; }
+      nav { padding: 10px 16px; }
+      #nav-logo { height: 54px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 0.6rem; letter-spacing: 0.14em; }
+      .container { padding: 0 16px; }
+      .s-section { padding: 56px 0; }
+      .section-title { font-size: 3rem; margin-bottom: 28px; }
+      .product-card { padding: 0 0 28px; }
+      .card-img { height: 240px; border-radius: 0; margin-bottom: 24px; }
+      .card-tag { margin: 0 24px 18px; }
+      .card-name { font-size: 2.6rem; margin: 0 24px 8px; }
+      .card-price { margin: 0 24px 22px; }
+      .card-divider { margin: 0 24px 18px; }
+      .card-features { margin: 0 24px 28px; }
+      .btn-fill { display: block; text-align: center; margin: 0 24px; padding: 16px; }
+      .cta-inner { padding: 56px 16px; }
       .cta-form { flex-direction: column; }
-      .cta-input { border-right: 1px solid rgba(255,255,255,0.07); border-bottom: none; }
+      .cta-input {
+        border-right: 1px solid rgba(255,255,255,0.07);
+        border-bottom: none;
+        border-radius: 0;
+      }
+      .cta-title { font-size: clamp(3rem, 14vw, 5rem); }
+      .size-table { font-size: 0.78rem; }
+      .size-table td, .size-table thead th { padding: 10px 10px; }
+      .hero-scroll { font-size: 0.55rem; }
     }
+
+  /* ═══ COMING SOON OVERLAY ════════════════════════════════ */
+  #cs-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #080808;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.6s ease;
+  }
+  #cs-overlay.hidden { opacity: 0; pointer-events: none; }
+
+  #cs-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 14vw, 9rem);
+    letter-spacing: 0.06em;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 28px;
+    animation: fadeUp 0.9s 0.1s both;
+  }
+  #cs-tagline {
+    font-size: clamp(0.85rem, 2.5vw, 1.15rem);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+    animation: fadeUp 0.9s 0.25s both;
+  }
+  #cs-date {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.4rem, 5vw, 2.6rem);
+    letter-spacing: 0.14em;
+    color: #EC407A;
+    margin-bottom: 40px;
+    animation: fadeUp 0.9s 0.35s both;
+  }
+  #cs-countdown {
+    display: flex; gap: 28px;
+    animation: fadeUp 0.9s 0.45s both;
+    margin-bottom: 0;
+  }
+  .cs-unit {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .cs-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    line-height: 1;
+    color: #fff;
+  }
+  .cs-label {
+    font-size: 0.52rem; letter-spacing: 0.26em;
+    text-transform: uppercase; color: rgba(255,255,255,0.32);
+  }
+  .cs-sep {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    color: rgba(255,255,255,0.18);
+    align-self: flex-start; padding-top: 4px;
+  }
+
+  /* Password button — top right */
+  #cs-pw-btn {
+    position: absolute; top: 28px; right: 36px;
+    font-size: 0.6rem; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+    background: none; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px; padding: 8px 20px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  #cs-pw-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+  /* Password modal */
+  #cs-modal-bg {
+    position: fixed; inset: 0; z-index: 100001;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  #cs-modal-bg.open { opacity: 1; pointer-events: all; }
+  #cs-modal {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: min(340px, 90vw);
+    display: flex; flex-direction: column; gap: 16px;
+    transform: translateY(12px);
+    transition: transform 0.25s;
+  }
+  #cs-modal-bg.open #cs-modal { transform: none; }
+  #cs-modal-title {
+    font-size: 0.62rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  #cs-pw-input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: inherit; font-size: 0.95rem;
+    color: #fff; outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.06em;
+  }
+  #cs-pw-input:focus { border-color: rgba(236,64,122,0.5); }
+  #cs-pw-input.error { border-color: #EF4444; animation: shake 0.35s; }
+  @keyframes shake {
+    0%,100% { transform: none; }
+    20%,60% { transform: translateX(-6px); }
+    40%,80% { transform: translateX(6px); }
+  }
+  #cs-pw-error {
+    font-size: 0.7rem; color: #EF4444;
+    letter-spacing: 0.08em;
+    min-height: 1em;
+    transition: opacity 0.2s;
+  }
+  #cs-pw-submit {
+    background: #EC407A;
+    border: none; border-radius: 8px;
+    padding: 14px;
+    font-family: inherit; font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  #cs-pw-submit:hover { opacity: 0.84; }
   </style>
 </head>
 <body>
+
+<!-- ══ COMING SOON OVERLAY ══════════════════════════════════ -->
+<div id="cs-overlay">
+  <button id="cs-pw-btn">Enter with password</button>
+  <div id="cs-logo">SYLUM</div>
+  <div id="cs-tagline">Restock soon..</div>
+  <div id="cs-date">August 20</div>
+  <div id="cs-countdown">
+    <div class="cs-unit">
+      <span class="cs-num" id="cs-days">00</span>
+      <span class="cs-label">Days</span>
+    </div>
+    <span class="cs-sep">:</span>
+    <div class="cs-unit">
+      <span class="cs-num" id="cs-hours">00</span>
+      <span class="cs-label">Hours</span>
+    </div>
+    <span class="cs-sep">:</span>
+    <div class="cs-unit">
+      <span class="cs-num" id="cs-mins">00</span>
+      <span class="cs-label">Minutes</span>
+    </div>
+    <span class="cs-sep">:</span>
+    <div class="cs-unit">
+      <span class="cs-num" id="cs-secs">00</span>
+      <span class="cs-label">Seconds</span>
+    </div>
+  </div>
+</div>
+
+<!-- Password modal -->
+<div id="cs-modal-bg">
+  <div id="cs-modal">
+    <div id="cs-modal-title">Enter access code</div>
+    <input id="cs-pw-input" type="password" placeholder="Password" autocomplete="off" />
+    <div id="cs-pw-error"></div>
+    <button id="cs-pw-submit">Enter</button>
+  </div>
+</div>
 
 <!-- Grain -->
 <svg class="grain" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -660,6 +860,79 @@
 </footer>
 
 <script>
+  /* ─── COMING SOON overlay ────────────────────────────── */
+  (function() {
+    var overlay    = document.getElementById('cs-overlay');
+    var pwBtn      = document.getElementById('cs-pw-btn');
+    var modalBg    = document.getElementById('cs-modal-bg');
+    var pwInput    = document.getElementById('cs-pw-input');
+    var pwError    = document.getElementById('cs-pw-error');
+    var pwSubmit   = document.getElementById('cs-pw-submit');
+    var PASSWORD   = 'sylum123';
+    var TARGET     = new Date('2026-08-20T00:00:00');
+
+    // Countdown
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function tick() {
+      var now  = new Date();
+      var diff = TARGET - now;
+      if (diff <= 0) {
+        document.getElementById('cs-days').textContent  = '00';
+        document.getElementById('cs-hours').textContent = '00';
+        document.getElementById('cs-mins').textContent  = '00';
+        document.getElementById('cs-secs').textContent  = '00';
+        return;
+      }
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000)  / 60000);
+      var s = Math.floor((diff % 60000)    / 1000);
+      document.getElementById('cs-days').textContent  = pad(d);
+      document.getElementById('cs-hours').textContent = pad(h);
+      document.getElementById('cs-mins').textContent  = pad(m);
+      document.getElementById('cs-secs').textContent  = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // Open / close modal
+    pwBtn.addEventListener('click', function() {
+      modalBg.classList.add('open');
+      setTimeout(function() { pwInput.focus(); }, 150);
+    });
+    modalBg.addEventListener('click', function(e) {
+      if (e.target === modalBg) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Enter' && modalBg.classList.contains('open')) checkPassword();
+    });
+    function closeModal() {
+      modalBg.classList.remove('open');
+      pwInput.value = '';
+      pwError.textContent = '';
+      pwInput.classList.remove('error');
+    }
+
+    // Password check
+    pwSubmit.addEventListener('click', checkPassword);
+    function checkPassword() {
+      if (pwInput.value === PASSWORD) {
+        overlay.classList.add('hidden');
+        modalBg.classList.remove('open');
+        setTimeout(function() { overlay.style.display = 'none'; }, 650);
+      } else {
+        pwError.textContent = 'Incorrect password.';
+        pwInput.classList.add('error');
+        pwInput.value = '';
+        setTimeout(function() {
+          pwInput.classList.remove('error');
+          pwError.textContent = '';
+        }, 900);
+      }
+    }
+  })();
+
   /* ─── JS ready ───────────────────────────────────────── */
   document.body.classList.add('js-ready');
 
