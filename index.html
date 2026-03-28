@@ -643,7 +643,11 @@
     color: #fff;
     line-height: 1;
     margin-bottom: 28px;
-    animation: letterCrunch 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    opacity: 0;
+    will-change: letter-spacing, opacity;
+  }
+  #cs-logo.crunch {
+    animation: letterCrunch 1.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   #cs-tagline {
     font-size: clamp(0.85rem, 2.5vw, 1.15rem);
@@ -1070,6 +1074,13 @@
     }
     tick();
     setInterval(tick, 1000);
+
+    // Trigger logo animation after first paint (fixes mobile)
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        document.getElementById('cs-logo').classList.add('crunch');
+      });
+    });
 
     // Open / close modal
     pwBtn.addEventListener('click', function() {
