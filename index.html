@@ -231,14 +231,6 @@
       line-height: 0.82;
       margin: 0 0 40px;
       position: relative; z-index: 2;
-      will-change: letter-spacing, opacity;
-    }
-    @keyframes heroLetterCrunch {
-      from { opacity: 0; letter-spacing: 0.55em; }
-      to   { opacity: 1; letter-spacing: 0.05em; }
-    }
-    .hero-title.crunch {
-      animation: heroLetterCrunch 2s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
     .hero-scroll {
       position: relative; z-index: 2;
@@ -639,11 +631,6 @@
   }
   #cs-overlay.hidden { opacity: 0; pointer-events: none; }
 
-  @keyframes letterCrunch {
-    from { opacity: 0; letter-spacing: 0.55em; }
-    to   { opacity: 1; letter-spacing: 0.06em; }
-  }
-
   #cs-logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(4rem, 14vw, 9rem);
@@ -652,10 +639,6 @@
     line-height: 1;
     margin-bottom: 28px;
     opacity: 0;
-    will-change: letter-spacing, opacity;
-  }
-  #cs-logo.crunch {
-    animation: letterCrunch 2s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   #cs-tagline {
     font-size: clamp(0.85rem, 2.5vw, 1.15rem);
@@ -1048,6 +1031,24 @@
 </footer>
 
 <script>
+  /* ─── Letter-crunch JS animation (mobile-safe) ───────── */
+  function crunchLetters(el, toEm, duration) {
+    var fromEm = 0.55;
+    el.style.opacity = '0';
+    el.style.letterSpacing = fromEm + 'em';
+    var startTime = null;
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    function frame(ts) {
+      if (!startTime) startTime = ts;
+      var p = Math.min((ts - startTime) / duration, 1);
+      var e = easeOut(p);
+      el.style.letterSpacing = (fromEm + (toEm - fromEm) * e) + 'em';
+      el.style.opacity = Math.min(p * 4, 1);
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
   /* ─── COMING SOON overlay ────────────────────────────── */
   (function() {
     var overlay    = document.getElementById('cs-overlay');
@@ -1083,11 +1084,9 @@
     tick();
     setInterval(tick, 1000);
 
-    // Trigger logo animation after first paint (fixes mobile)
+    // Trigger logo animation after first paint
     requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        document.getElementById('cs-logo').classList.add('crunch');
-      });
+      crunchLetters(document.getElementById('cs-logo'), 0.06, 2000);
     });
 
     // Open / close modal
@@ -1117,10 +1116,8 @@
         modalBg.classList.remove('open');
         setTimeout(function() { overlay.style.display = 'none'; }, 650);
         requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            var heroTitle = document.querySelector('.hero-title');
-            if (heroTitle) heroTitle.classList.add('crunch');
-          });
+          var heroTitle = document.querySelector('.hero-title');
+          if (heroTitle) crunchLetters(heroTitle, 0.05, 2000);
         });
       } else {
         pwError.textContent = 'Incorrect password.';
