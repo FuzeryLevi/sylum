@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYLUM — Hoodie Tech Pack</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --dark: #1a1a1a;
+    --mid: #3a3a3a;
+    --muted: #888;
+    --border: #d0d0d0;
+    --light: #f5f5f5;
+    --white: #ffffff;
+    --accent: #0a0a0a;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #e8e8e8;
+    color: var(--black);
+  }
+
+  /* PAGE SYSTEM */
+  .page {
+    width: 297mm;
+    min-height: 210mm;
+    background: var(--white);
+    margin: 12mm auto;
+    padding: 10mm 12mm;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    position: relative;
+    page-break-after: always;
+  }
+
+  /* HEADER BAR */
+  .page-header {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr 1fr;
+    border: 1.5px solid var(--black);
+    margin-bottom: 6mm;
+    font-size: 7.5px;
+  }
+  .page-header .brand-cell {
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    grid-row: span 2;
+  }
+  .page-header .brand-cell .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    color: white;
+    font-size: 22px;
+    letter-spacing: 4px;
+  }
+  .header-cell {
+    border-left: 1px solid var(--black);
+    padding: 3px 5px;
+  }
+  .header-cell.label {
+    font-weight: 700;
+    font-size: 6.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+    padding: 2px 5px;
+  }
+  .header-cell.value {
+    font-weight: 600;
+    font-size: 8px;
+    padding: 3px 5px;
+  }
+  .header-row {
+    display: contents;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    border-bottom: 1.5px solid var(--black);
+    padding-bottom: 2px;
+    margin-bottom: 4mm;
+  }
+
+  /* TWO COLUMN LAYOUT */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
+
+  /* FLAT SKETCH AREA */
+  .sketch-box {
+    border: 1px solid var(--border);
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4mm;
+    border-radius: 2px;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8px;
+  }
+  th {
+    background: var(--black);
+    color: white;
+    padding: 4px 6px;
+    font-weight: 600;
+    font-size: 7.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 3.5px 6px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  td:first-child { border-left: 1px solid var(--border); }
+  tr:nth-child(even) td { background: #fafafa; }
+  tr:hover td { background: #f0f0f0; }
+  .td-label { font-weight: 600; background: #f5f5f5 !important; }
+  .td-center { text-align: center; }
+  .td-bold { font-weight: 700; }
+
+  /* SPEC BOX */
+  .spec-box {
+    border: 1px solid var(--border);
+    padding: 3mm 4mm;
+    border-radius: 2px;
+    font-size: 7.5px;
+  }
+  .spec-box h4 {
+    font-size: 7px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 3px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+  }
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 7.5px;
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row span:first-child { color: var(--muted); }
+  .spec-row span:last-child { font-weight: 600; }
+
+  /* EMBROIDERY PLACEMENT BOX */
+  .placement-diagram {
+    border: 1px solid var(--border);
+    background: #fafafa;
+    padding: 4mm;
+    text-align: center;
+    position: relative;
+  }
+  .placement-marker {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--black);
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* LABEL DESIGNS */
+  .label-preview {
+    border: 1.5px solid var(--black);
+    padding: 4mm 6mm;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: white;
+    min-width: 70px;
+    font-size: 7px;
+  }
+  .label-preview.neck-label {
+    background: var(--black);
+    color: white;
+  }
+  .label-preview.woven { background: #f5f0e8; }
+
+  /* COLOR SWATCH */
+  .color-swatch {
+    width: 28px; height: 28px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    display: inline-block;
+  }
+
+  /* NOTE BOX */
+  .note-box {
+    background: #fffbf0;
+    border: 1px solid #e8d88a;
+    border-left: 3px solid #d4a800;
+    padding: 3mm 4mm;
+    font-size: 7.5px;
+    border-radius: 0 2px 2px 0;
+  }
+  .note-box strong { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; color: #a07800; }
+
+  /* PAGE NUMBER */
+  .page-number {
+    position: absolute;
+    bottom: 6mm;
+    right: 12mm;
+    font-size: 7px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* FOOTER LINE */
+  .page-footer {
+    position: absolute;
+    bottom: 10mm;
+    left: 12mm;
+    right: 50mm;
+    border-top: 1px solid var(--border);
+    padding-top: 2px;
+    font-size: 6.5px;
+    color: var(--muted);
+  }
+
+  /* SECTION DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 4mm 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--black);
+    color: white;
+    padding: 2px 6px;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1 — STYLE OVERVIEW & TECHNICAL FLATS
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="brand-cell"><div class="logo-text">SYLUM</div></div>
+    <div style="display:contents">
+      <div class="header-cell label">Season</div>
+      <div class="header-cell label">Style No.</div>
+      <div class="header-cell label">Category</div>
+      <div class="header-cell label">Fabric</div>
+      <div class="header-cell label">Input</div>
+      <div class="header-cell label">Output</div>
+    </div>
+    <div style="display:contents">
+      <div class="header-cell value">2025 F/W</div>
+      <div class="header-cell value">SY-HD-001</div>
+      <div class="header-cell value">HOODIE</div>
+      <div class="header-cell value">400g Fleece</div>
+      <div class="header-cell value">2025 / 05 / 01</div>
+      <div class="header-cell value">2025 / 08 / 01</div>
+    </div>
+  </div>
+
+  <!-- NAME ROW -->
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5mm;">
+    <div>
+      <div style="font-size:7px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted);">Style Name</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:3px;">SYLUM OVERSIZED HOODIE</div>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <span style="font-size:7px; font-weight:700; text-transform:uppercase; color:var(--muted);">Colorways:</span>
+      <span style="display:flex; align-items:center; gap:3px; font-size:7.5px; font-weight:600;">
+        <span class="color-swatch" style="background:#1a1a1a;"></span> Black
+      </span>
+      <span style="display:flex; align-items:center; gap:3px; font-size:7.5px; font-weight:600;">
+        <span class="color-swatch" style="background:#f5f5f5; border:1px solid #ccc;"></span> Off White
+      </span>
+      <span style="display:flex; align-items:center; gap:3px; font-size:7.5px; font-weight:600;">
+        <span class="color-swatch" style="background:#8a8a8a;"></span> Ash Grey
+      </span>
+    </div>
+  </div>
+
+  <!-- TECHNICAL FLATS -->
+  <div class="section-title">Technical Flats — Front & Back</div>
+
+  <div class="two-col" style="gap:8mm; margin-bottom:5mm;">
+
+    <!-- FRONT VIEW SVG -->
+    <div>
+      <div style="text-align:center; font-size:7px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:2mm;">Front View</div>
+      <div class="sketch-box" style="height:85mm;">
+        <svg viewBox="0 0 220 260" width="100%" height="100%">
+          <!-- BODY -->
+          <path d="M55,60 L20,90 L15,140 L25,145 L25,240 L195,240 L195,145 L205,140 L200,90 L165,60" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- HOOD -->
+          <path d="M55,60 C55,60 60,20 80,12 C90,8 100,6 110,6 C120,6 130,8 140,12 C160,20 165,60 165,60" fill="none" stroke="#1a1a1a" stroke-width="2.2"/>
+          <!-- HOOD INNER -->
+          <path d="M72,58 C72,58 76,28 90,18 C97,13 104,11 110,11 C116,11 123,13 130,18 C144,28 148,58 148,58" fill="none" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <!-- HOOD CENTER SEAM -->
+          <line x1="110" y1="6" x2="110" y2="60" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,2"/>
+          <!-- SHOULDER SEAMS -->
+          <line x1="55" y1="60" x2="75" y2="65" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="165" y1="60" x2="145" y2="65" stroke="#1a1a1a" stroke-width="1"/>
+          <!-- SLEEVE LEFT -->
+          <path d="M20,90 L5,100 L0,170 L8,175 L20,172 L25,145" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- SLEEVE RIGHT -->
+          <path d="M200,90 L215,100 L220,170 L212,175 L200,172 L195,145" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- SLEEVE CUFF LEFT -->
+          <line x1="0" y1="170" x2="8" y2="175" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="1" y1="164" x2="9" y2="169" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="2" y1="158" x2="10" y2="163" stroke="#1a1a1a" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+          <!-- SLEEVE CUFF RIGHT -->
+          <line x1="220" y1="170" x2="212" y2="175" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="219" y1="164" x2="211" y2="169" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="218" y1="158" x2="210" y2="163" stroke="#1a1a1a" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+          <!-- KANGAROO POCKET -->
+          <path d="M70,160 L70,215 Q70,220 75,220 L145,220 Q150,220 150,215 L150,160" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+          <line x1="110" y1="160" x2="110" y2="220" stroke="#1a1a1a" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <!-- RIB HEM -->
+          <line x1="25" y1="232" x2="195" y2="232" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="25" y1="237" x2="195" y2="237" stroke="#1a1a1a" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <!-- DRAWSTRINGS -->
+          <line x1="95" y1="58" x2="88" y2="120" stroke="#1a1a1a" stroke-width="0.8"/>
+          <line x1="125" y1="58" x2="132" y2="120" stroke="#1a1a1a" stroke-width="0.8"/>
+          <!-- DRAWSTRING TIPS -->
+          <circle cx="88" cy="122" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+          <circle cx="132" cy="122" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+
+          <!-- EMBROIDERY PLACEMENT MARKER — CENTER CHEST -->
+          <rect x="90" y="78" width="40" height="22" fill="none" stroke="#c00" stroke-width="1" stroke-dasharray="3,2" rx="2"/>
+          <text x="110" y="73" text-anchor="middle" font-family="Inter" font-size="6" fill="#c00" font-weight="700">EMBROIDERY</text>
+          <line x1="110" y1="75" x2="110" y2="78" stroke="#c00" stroke-width="0.8"/>
+
+          <!-- MEASUREMENT LINES -->
+          <!-- A: Length -->
+          <line x1="210" y1="60" x2="210" y2="240" stroke="#555" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <line x1="207" y1="60" x2="213" y2="60" stroke="#555" stroke-width="0.7"/>
+          <line x1="207" y1="240" x2="213" y2="240" stroke="#555" stroke-width="0.7"/>
+          <text x="216" y="152" font-family="Inter" font-size="7" fill="#555" font-weight="600">A</text>
+          <!-- B: 1/2 Chest -->
+          <line x1="25" y1="85" x2="195" y2="85" stroke="#555" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <line x1="25" y1="82" x2="25" y2="88" stroke="#555" stroke-width="0.7"/>
+          <line x1="195" y1="82" x2="195" y2="88" stroke="#555" stroke-width="0.7"/>
+          <text x="106" y="80" font-family="Inter" font-size="7" fill="#555" font-weight="600">B</text>
+          <!-- C: 1/2 Hem -->
+          <line x1="25" y1="248" x2="195" y2="248" stroke="#555" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <text x="106" y="256" font-family="Inter" font-size="7" fill="#555" font-weight="600">C</text>
+          <!-- D: Sleeve -->
+          <line x1="5" y1="92" x2="5" y2="175" stroke="#555" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <text x="-2" y="137" font-family="Inter" font-size="7" fill="#555" font-weight="600">D</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- BACK VIEW SVG -->
+    <div>
+      <div style="text-align:center; font-size:7px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:2mm;">Back View</div>
+      <div class="sketch-box" style="height:85mm;">
+        <svg viewBox="0 0 220 260" width="100%" height="100%">
+          <!-- BODY -->
+          <path d="M55,60 L20,90 L15,140 L25,145 L25,240 L195,240 L195,145 L205,140 L200,90 L165,60" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- HOOD BACK -->
+          <path d="M55,60 C55,60 60,20 80,12 C90,8 100,6 110,6 C120,6 130,8 140,12 C160,20 165,60 165,60" fill="none" stroke="#1a1a1a" stroke-width="2.2"/>
+          <!-- HOOD CENTER SEAM BACK -->
+          <line x1="110" y1="6" x2="110" y2="65" stroke="#1a1a1a" stroke-width="1.5"/>
+          <!-- HOOD SEAM CURVE -->
+          <path d="M72,62 C85,70 95,72 110,72 C125,72 135,70 148,62" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+          <!-- BACK CENTER SEAM -->
+          <line x1="110" y1="72" x2="110" y2="240" stroke="#1a1a1a" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <!-- SLEEVE LEFT -->
+          <path d="M20,90 L5,100 L0,170 L8,175 L20,172 L25,145" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- SLEEVE RIGHT -->
+          <path d="M200,90 L215,100 L220,170 L212,175 L200,172 L195,145" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- CUFFS LEFT -->
+          <line x1="0" y1="170" x2="8" y2="175" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="1" y1="164" x2="9" y2="169" stroke="#1a1a1a" stroke-width="1"/>
+          <!-- CUFFS RIGHT -->
+          <line x1="220" y1="170" x2="212" y2="175" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="219" y1="164" x2="211" y2="169" stroke="#1a1a1a" stroke-width="1"/>
+          <!-- RIB HEM -->
+          <line x1="25" y1="232" x2="195" y2="232" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="25" y1="237" x2="195" y2="237" stroke="#1a1a1a" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <!-- BACK LABEL PLACEMENT -->
+          <rect x="99" y="68" width="22" height="10" fill="none" stroke="#555" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <text x="110" y="64" text-anchor="middle" font-family="Inter" font-size="5.5" fill="#555">LABEL</text>
+          <!-- BACK LOGO OPTION (OPTIONAL) -->
+          <rect x="82" y="100" width="56" height="20" fill="none" stroke="#999" stroke-width="0.7" stroke-dasharray="2,2" rx="2"/>
+          <text x="110" y="112" text-anchor="middle" font-family="Inter" font-size="6" fill="#999">OPTIONAL BACK PRINT</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSTRUCTION NOTES -->
+  <div class="section-title">Construction Notes</div>
+  <div class="three-col" style="gap:4mm;">
+    <div class="spec-box">
+      <h4>Fabric</h4>
+      <div class="spec-row"><span>Main Body</span><span>400g French Terry Fleece</span></div>
+      <div class="spec-row"><span>Composition</span><span>80% Cotton / 20% Polyester</span></div>
+      <div class="spec-row"><span>Finish</span><span>Brushed inside</span></div>
+      <div class="spec-row"><span>Weight</span><span>400 GSM</span></div>
+    </div>
+    <div class="spec-box">
+      <h4>Rib</h4>
+      <div class="spec-row"><span>Cuffs & Hem</span><span>1x1 Rib</span></div>
+      <div class="spec-row"><span>Composition</span><span>95% Cotton / 5% Elastane</span></div>
+      <div class="spec-row"><span>Cuff Width</span><span>6 cm</span></div>
+      <div class="spec-row"><span>Hem Width</span><span>7 cm</span></div>
+    </div>
+    <div class="spec-box">
+      <h4>Stitching</h4>
+      <div class="spec-row"><span>Main Seams</span><span>4-thread overlock</span></div>
+      <div class="spec-row"><span>Topstitch</span><span>2-needle, 6mm apart</span></div>
+      <div class="spec-row"><span>Thread</span><span>Match body color</span></div>
+      <div class="spec-row"><span>SPI</span><span>8 stitches per inch</span></div>
+    </div>
+  </div>
+
+  <div class="page-footer">SYLUM — SY-HD-001 — OVERSIZED HOODIE — CONFIDENTIAL</div>
+  <div class="page-number">1 / 5</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2 — MEASUREMENTS / SPEC SHEET
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="brand-cell"><div class="logo-text">SYLUM</div></div>
+    <div style="display:contents">
+      <div class="header-cell label">Season</div>
+      <div class="header-cell label">Style No.</div>
+      <div class="header-cell label">Category</div>
+      <div class="header-cell label">Page</div>
+      <div class="header-cell label">Input</div>
+      <div class="header-cell label">Output</div>
+    </div>
+    <div style="display:contents">
+      <div class="header-cell value">2025 F/W</div>
+      <div class="header-cell value">SY-HD-001</div>
+      <div class="header-cell value">MEASUREMENTS</div>
+      <div class="header-cell value">2 / 5</div>
+      <div class="header-cell value">2025 / 05 / 01</div>
+      <div class="header-cell value">2025 / 08 / 01</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="align-items:start;">
+
+    <!-- MEASUREMENT DIAGRAM -->
+    <div>
+      <div class="section-title">Measurement Points</div>
+      <div class="sketch-box" style="height:120mm; margin-bottom:4mm;">
+        <svg viewBox="0 0 200 240" width="100%" height="100%">
+          <!-- BODY OUTLINE -->
+          <path d="M50,55 L20,80 L15,130 L22,134 L22,225 L178,225 L178,134 L185,130 L180,80 L150,55" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M50,55 C50,55 55,18 72,10 C82,5 92,4 100,4 C108,4 118,5 128,10 C145,18 150,55 150,55" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+          <path d="M20,80 L5,90 L1,155 L8,160 L20,157 L22,134" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+          <path d="M180,80 L195,90 L199,155 L192,160 L180,157 L178,134" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+          <line x1="22" y1="218" x2="178" y2="218" stroke="#1a1a1a" stroke-width="1.2"/>
+
+          <!-- A: Length from HSP -->
+          <circle cx="100" cy="55" r="2.5" fill="#c00"/>
+          <line x1="165" y1="55" x2="165" y2="225" stroke="#c00" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="160" y1="55" x2="170" y2="55" stroke="#c00" stroke-width="1.2"/>
+          <line x1="160" y1="225" x2="170" y2="225" stroke="#c00" stroke-width="1.2"/>
+          <text x="172" y="142" font-family="Inter" font-size="9" fill="#c00" font-weight="800">A</text>
+
+          <!-- B: 1/2 Chest -->
+          <line x1="22" y1="80" x2="178" y2="80" stroke="#0066cc" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="22" y1="75" x2="22" y2="85" stroke="#0066cc" stroke-width="1.2"/>
+          <line x1="178" y1="75" x2="178" y2="85" stroke="#0066cc" stroke-width="1.2"/>
+          <text x="96" y="74" font-family="Inter" font-size="9" fill="#0066cc" font-weight="800">B</text>
+
+          <!-- C: 1/2 Hem -->
+          <line x1="22" y1="210" x2="178" y2="210" stroke="#008800" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="22" y1="205" x2="22" y2="215" stroke="#008800" stroke-width="1.2"/>
+          <line x1="178" y1="205" x2="178" y2="215" stroke="#008800" stroke-width="1.2"/>
+          <text x="96" y="205" font-family="Inter" font-size="9" fill="#008800" font-weight="800">C</text>
+
+          <!-- D: Sleeve -->
+          <line x1="5" y1="87" x2="5" y2="160" stroke="#aa6600" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="1" y1="87" x2="9" y2="87" stroke="#aa6600" stroke-width="1.2"/>
+          <line x1="1" y1="160" x2="9" y2="160" stroke="#aa6600" stroke-width="1.2"/>
+          <text x="-4" y="127" font-family="Inter" font-size="9" fill="#aa6600" font-weight="800">D</text>
+
+          <!-- LEGEND -->
+          <rect x="20" y="230" width="160" height="1" fill="none"/>
+        </svg>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2mm; font-size:7.5px;">
+        <div style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:2px; background:#c00; margin-right:2px;"></span><strong style="color:#c00;">A</strong> — Length from HSP</div>
+        <div style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:2px; background:#0066cc;"></span><strong style="color:#0066cc;">B</strong> — 1/2 Chest</div>
+        <div style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:2px; background:#008800;"></span><strong style="color:#008800;">C</strong> — 1/2 Hem</div>
+        <div style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:2px; background:#aa6600;"></span><strong style="color:#aa6600;">D</strong> — Sleeve Length</div>
+      </div>
+    </div>
+
+    <!-- MEASUREMENT TABLE -->
+    <div>
+      <div class="section-title">Size Specifications (CM)</div>
+      <table style="margin-bottom:5mm;">
+        <thead>
+          <tr>
+            <th style="text-align:left; width:42%;">Measurement</th>
+            <th>XXS</th>
+            <th>XS</th>
+            <th>S</th>
+            <th>M</th>
+            <th>L</th>
+            <th>XL</th>
+            <th>XXL</th>
+            <th>XXXL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">A — Length HSP</td>
+            <td class="td-center td-bold">61</td>
+            <td class="td-center td-bold">63</td>
+            <td class="td-center td-bold">65</td>
+            <td class="td-center td-bold">67</td>
+            <td class="td-center td-bold">69</td>
+            <td class="td-center td-bold">71</td>
+            <td class="td-center td-bold">73</td>
+            <td class="td-center td-bold">75</td>
+          </tr>
+          <tr>
+            <td class="td-label">B — 1/2 Chest</td>
+            <td class="td-center td-bold">60</td>
+            <td class="td-center td-bold">62</td>
+            <td class="td-center td-bold">64</td>
+            <td class="td-center td-bold">66</td>
+            <td class="td-center td-bold">68</td>
+            <td class="td-center td-bold">70</td>
+            <td class="td-center td-bold">72</td>
+            <td class="td-center td-bold">74</td>
+          </tr>
+          <tr>
+            <td class="td-label">C — 1/2 Hem</td>
+            <td class="td-center td-bold">37</td>
+            <td class="td-center td-bold">39</td>
+            <td class="td-center td-bold">41</td>
+            <td class="td-center td-bold">43</td>
+            <td class="td-center td-bold">45</td>
+            <td class="td-center td-bold">47</td>
+            <td class="td-center td-bold">49</td>
+            <td class="td-center td-bold">51</td>
+          </tr>
+          <tr>
+            <td class="td-label">D — Sleeve Length</td>
+            <td class="td-center td-bold">56</td>
+            <td class="td-center td-bold">57.5</td>
+            <td class="td-center td-bold">59</td>
+            <td class="td-center td-bold">60.5</td>
+            <td class="td-center td-bold">62</td>
+            <td class="td-center td-bold">63.5</td>
+            <td class="td-center td-bold">65</td>
+            <td class="td-center td-bold">66.5</td>
+          </tr>
+          <tr>
+            <td class="td-label">Full Chest (B×2)</td>
+            <td class="td-center" style="color:#555;">120</td>
+            <td class="td-center" style="color:#555;">124</td>
+            <td class="td-center" style="color:#555;">128</td>
+            <td class="td-center" style="color:#555;">132</td>
+            <td class="td-center" style="color:#555;">136</td>
+            <td class="td-center" style="color:#555;">140</td>
+            <td class="td-center" style="color:#555;">144</td>
+            <td class="td-center" style="color:#555;">148</td>
+          </tr>
+          <tr>
+            <td class="td-label">Cuff Width (rib)</td>
+            <td class="td-center" colspan="4" style="color:#555; text-align:center;">12 cm (all sizes)</td>
+            <td class="td-center" colspan="4" style="color:#555; text-align:center;">13 cm (all sizes)</td>
+          </tr>
+          <tr>
+            <td class="td-label">Hem Rib Height</td>
+            <td class="td-center" colspan="8" style="color:#555; text-align:center;">7 cm (all sizes)</td>
+          </tr>
+          <tr>
+            <td class="td-label">Hood Height</td>
+            <td class="td-center" colspan="8" style="color:#555; text-align:center;">34 cm (all sizes)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note-box">
+        <strong>Tolerance:</strong> All measurements ±1 cm. Measurements taken on flat garment, before washing.
+        HSP = High Shoulder Point. All measurements in CM.
+      </div>
+
+      <div style="margin-top:4mm;" class="spec-box">
+        <h4>Fit Reference</h4>
+        <div class="spec-row"><span>Fit Type</span><span>Oversized / Boxy</span></div>
+        <div class="spec-row"><span>Shoulder Drop</span><span>+8 cm from natural shoulder</span></div>
+        <div class="spec-row"><span>Body Ratio</span><span>1/2 Chest ≈ Length (ultra boxy)</span></div>
+        <div class="spec-row"><span>Sleeve Style</span><span>Set-in, dropped shoulder</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">SYLUM — SY-HD-001 — OVERSIZED HOODIE — CONFIDENTIAL</div>
+  <div class="page-number">2 / 5</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 3 — EMBROIDERY ARTWORK
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="brand-cell"><div class="logo-text">SYLUM</div></div>
+    <div style="display:contents">
+      <div class="header-cell label">Season</div>
+      <div class="header-cell label">Style No.</div>
+      <div class="header-cell label">Category</div>
+      <div class="header-cell label">Page</div>
+      <div class="header-cell label">Technique</div>
+      <div class="header-cell label">Output</div>
+    </div>
+    <div style="display:contents">
+      <div class="header-cell value">2025 F/W</div>
+      <div class="header-cell value">SY-HD-001</div>
+      <div class="header-cell value">EMBROIDERY</div>
+      <div class="header-cell value">3 / 5</div>
+      <div class="header-cell value">FLAT EMBROIDERY</div>
+      <div class="header-cell value">2025 / 08 / 01</div>
+    </div>
+  </div>
+
+  <div class="section-title">Embroidery Placement — Front</div>
+
+  <div class="two-col" style="gap:8mm; margin-bottom:5mm;">
+
+    <!-- PLACEMENT DIAGRAM FRONT -->
+    <div>
+      <div style="text-align:center; font-size:7px; font-weight:700; text-transform:uppercase; margin-bottom:2mm; letter-spacing:1px;">Placement Diagram — Left Chest</div>
+      <div class="sketch-box" style="height:90mm; position:relative;">
+        <svg viewBox="0 0 180 200" width="100%" height="100%">
+          <!-- HOODIE BODY (simplified) -->
+          <path d="M40,45 L15,65 L12,110 L18,113 L18,190 L162,190 L162,113 L168,110 L165,65 L140,45" fill="#f5f5f5" stroke="#ccc" stroke-width="1.5"/>
+          <path d="M40,45 C40,45 44,15 58,8 C67,4 75,3 90,3 C105,3 113,4 122,8 C136,15 140,45 140,45" fill="#f5f5f5" stroke="#ccc" stroke-width="1.5"/>
+          <path d="M15,65 L4,73 L1,125 L6,128 L15,126 L18,113" fill="#f0f0f0" stroke="#ccc" stroke-width="1.5"/>
+          <path d="M165,65 L176,73 L179,125 L174,128 L165,126 L162,113" fill="#f0f0f0" stroke="#ccc" stroke-width="1.5"/>
+          <!-- POCKET -->
+          <path d="M55,135 L55,180 Q55,184 59,184 L121,184 Q125,184 125,180 L125,135" fill="none" stroke="#bbb" stroke-width="1"/>
+          <line x1="90" y1="135" x2="90" y2="184" stroke="#bbb" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <!-- RIB -->
+          <line x1="18" y1="184" x2="162" y2="184" stroke="#bbb" stroke-width="1"/>
+
+          <!-- EMBROIDERY BOX — LEFT CHEST -->
+          <rect x="30" y="65" width="48" height="24" fill="rgba(200,0,0,0.06)" stroke="#c00" stroke-width="1.2" stroke-dasharray="3,2" rx="2"/>
+          <!-- SYLUM TEXT IN BOX -->
+          <text x="54" y="80" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="12" fill="#1a1a1a" letter-spacing="3">SYLUM</text>
+          <!-- DIMENSIONS -->
+          <line x1="30" y1="94" x2="78" y2="94" stroke="#c00" stroke-width="0.8"/>
+          <line x1="30" y1="91" x2="30" y2="97" stroke="#c00" stroke-width="0.8"/>
+          <line x1="78" y1="91" x2="78" y2="97" stroke="#c00" stroke-width="0.8"/>
+          <text x="54" y="100" text-anchor="middle" font-family="Inter" font-size="6" fill="#c00" font-weight="700">← 8–10 cm →</text>
+          <!-- DISTANCE FROM CENTER -->
+          <line x1="90" y1="55" x2="90" y2="77" stroke="#0066cc" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <text x="90" y="52" text-anchor="middle" font-family="Inter" font-size="5.5" fill="#0066cc">CF</text>
+          <!-- HSP TO LOGO -->
+          <line x1="40" y1="45" x2="40" y2="65" stroke="#888" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <text x="25" y="57" font-family="Inter" font-size="5.5" fill="#888">15–17cm</text>
+          <text x="25" y="63" font-family="Inter" font-size="5" fill="#888">from HSP</text>
+          <!-- LEFT EDGE MARK -->
+          <line x1="18" y1="77" x2="30" y2="77" stroke="#888" stroke-width="0.7" stroke-dasharray="2,2"/>
+          <text x="12" y="80" text-anchor="middle" font-family="Inter" font-size="5" fill="#888">4cm</text>
+        </svg>
+      </div>
+
+      <div class="note-box" style="margin-top:3mm;">
+        <strong>Placement:</strong> Left chest, 15–17 cm from HSP (High Shoulder Point), 4 cm from center front. Horizontal center of logo aligns to nipple line.
+      </div>
+    </div>
+
+    <!-- EMBROIDERY SPECS -->
+    <div>
+      <div class="section-title">Embroidery Specifications</div>
+
+      <div class="spec-box" style="margin-bottom:3mm;">
+        <h4>Logo Details</h4>
+        <div class="spec-row"><span>Logo Text</span><span style="font-weight:800; letter-spacing:2px;">SYLUM</span></div>
+        <div class="spec-row"><span>Font Style</span><span>Custom / Bold Condensed Caps</span></div>
+        <div class="spec-row"><span>Logo Width</span><span>8–10 cm (across sizes)</span></div>
+        <div class="spec-row"><span>Logo Height</span><span>1.8–2.5 cm</span></div>
+        <div class="spec-row"><span>Placement</span><span>Left Chest — Center Chest</span></div>
+      </div>
+
+      <div class="spec-box" style="margin-bottom:3mm;">
+        <h4>Embroidery Technical</h4>
+        <div class="spec-row"><span>Type</span><span>Flat Embroidery (Düz Nakış)</span></div>
+        <div class="spec-row"><span>Stitch Type</span><span>Satin stitch (letters), run stitch (outline)</span></div>
+        <div class="spec-row"><span>Density</span><span>High — no fabric showing through</span></div>
+        <div class="spec-row"><span>Underlay</span><span>Zigzag underlay, full coverage</span></div>
+        <div class="spec-row"><span>Stabilizer</span><span>Cutaway stabilizer (fleece base)</span></div>
+        <div class="spec-row"><span>Pull Compensation</span><span>+5% on letter width</span></div>
+        <div class="spec-row"><span>Hoop Required</span><span>Yes — standard 15x15cm</span></div>
+      </div>
+
+      <div class="spec-box" style="margin-bottom:3mm;">
+        <h4>Thread Colors by Colorway</h4>
+        <div class="spec-row">
+          <span>Black Hoodie</span>
+          <span style="display:flex; align-items:center; gap:4px;"><span class="color-swatch" style="background:#f5f5f5; width:14px; height:14px;"></span> White — Madeira 9141</span>
+        </div>
+        <div class="spec-row">
+          <span>Off White Hoodie</span>
+          <span style="display:flex; align-items:center; gap:4px;"><span class="color-swatch" style="background:#1a1a1a; width:14px; height:14px;"></span> Black — Madeira 9000</span>
+        </div>
+        <div class="spec-row">
+          <span>Ash Grey Hoodie</span>
+          <span style="display:flex; align-items:center; gap:4px;"><span class="color-swatch" style="background:#f5f5f5; width:14px; height:14px;"></span> White — Madeira 9141</span>
+        </div>
+        <div class="spec-row"><span>Thread Brand</span><span>Madeira / Gunold (40 wt)</span></div>
+      </div>
+
+      <div class="note-box">
+        <strong>Important:</strong> Provide vector artwork (.DST or .EMB embroidery file) to manufacturer.
+        Minimum letter height for legibility: 6mm. Request pre-production sample for approval.
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTIONAL BACK / SLEEVE HIT -->
+  <div class="section-title">Optional Secondary Embroidery Hits</div>
+  <div class="three-col" style="gap:4mm;">
+    <div class="spec-box">
+      <h4>Back Hood (Optional)</h4>
+      <div class="spec-row"><span>Position</span><span>Center hood, top</span></div>
+      <div class="spec-row"><span>Content</span><span>Small SYLUM logo or "SY" monogram</span></div>
+      <div class="spec-row"><span>Size</span><span>4–5 cm wide</span></div>
+      <div class="spec-row"><span>Status</span><span style="color:#aa6600; font-weight:700;">OPTIONAL</span></div>
+    </div>
+    <div class="spec-box">
+      <h4>Right Sleeve Hit (Optional)</h4>
+      <div class="spec-row"><span>Position</span><span>Right sleeve, 5cm from cuff</span></div>
+      <div class="spec-row"><span>Content</span><span>"SYLUM" vertical text</span></div>
+      <div class="spec-row"><span>Size</span><span>1 cm × 6 cm</span></div>
+      <div class="spec-row"><span>Status</span><span style="color:#aa6600; font-weight:700;">OPTIONAL</span></div>
+    </div>
+    <div class="spec-box">
+      <h4>Pocket Hit (Optional)</h4>
+      <div class="spec-row"><span>Position</span><span>Left pocket edge</span></div>
+      <div class="spec-row"><span>Content</span><span>Small "S" monogram</span></div>
+      <div class="spec-row"><span>Size</span><span>2 cm</span></div>
+      <div class="spec-row"><span>Status</span><span style="color:#aa6600; font-weight:700;">OPTIONAL</span></div>
+    </div>
+  </div>
+
+  <div class="page-footer">SYLUM — SY-HD-001 — OVERSIZED HOODIE — CONFIDENTIAL</div>
+  <div class="page-number">3 / 5</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 4 — LABELS
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="brand-cell"><div class="logo-text">SYLUM</div></div>
+    <div style="display:contents">
+      <div class="header-cell label">Season</div>
+      <div class="header-cell label">Style No.</div>
+      <div class="header-cell label">Category</div>
+      <div class="header-cell label">Page</div>
+      <div class="header-cell label">Section</div>
+      <div class="header-cell label">Output</div>
+    </div>
+    <div style="display:contents">
+      <div class="header-cell value">2025 F/W</div>
+      <div class="header-cell value">SY-HD-001</div>
+      <div class="header-cell value">LABELS</div>
+      <div class="header-cell value">4 / 5</div>
+      <div class="header-cell value">LABEL DESIGN</div>
+      <div class="header-cell value">2025 / 08 / 01</div>
+    </div>
+  </div>
+
+  <!-- MAIN NECK LABEL -->
+  <div class="section-title">01 — Main Brand Label (Back Neck)</div>
+  <div class="two-col" style="gap:8mm; margin-bottom:6mm;">
+    <div>
+      <!-- LABEL PREVIEW -->
+      <div style="display:flex; gap:10mm; align-items:flex-start; flex-wrap:wrap;">
+        <!-- WOVEN LABEL - BLACK VERSION -->
+        <div>
+          <div style="font-size:6.5px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:3mm; font-weight:600;">Black Colorway</div>
+          <div style="border: 2px solid #1a1a1a; background: #1a1a1a; color: white; padding: 8px 16px; display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:5px; line-height:1;">SYLUM</div>
+            <div style="font-size:6px; letter-spacing:3px; opacity:0.7; font-weight:500;">EST. 2025</div>
+          </div>
+          <div style="font-size:6px; color:#888; margin-top:2mm;">Woven label, black base, white text</div>
+        </div>
+        <!-- WOVEN LABEL - WHITE VERSION -->
+        <div>
+          <div style="font-size:6.5px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:3mm; font-weight:600;">Light Colorways</div>
+          <div style="border: 2px solid #1a1a1a; background: white; color: #1a1a1a; padding: 8px 16px; display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:5px; line-height:1;">SYLUM</div>
+            <div style="font-size:6px; letter-spacing:3px; color:#888; font-weight:500;">EST. 2025</div>
+          </div>
+          <div style="font-size:6px; color:#888; margin-top:2mm;">Woven label, white base, black text</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="spec-box">
+        <h4>Main Label Specs</h4>
+        <div class="spec-row"><span>Position</span><span>Center back neck, inside</span></div>
+        <div class="spec-row"><span>Attachment</span><span>Sewn at top edge only (fold-down label)</span></div>
+        <div class="spec-row"><span>Type</span><span>Woven (damask weave)</span></div>
+        <div class="spec-row"><span>Size</span><span>55 mm wide × 35 mm tall (folded)</span></div>
+        <div class="spec-row"><span>Fold</span><span>Center fold (loop label)</span></div>
+        <div class="spec-row"><span>Material</span><span>100% Polyester woven tape</span></div>
+        <div class="spec-row"><span>Colors</span><span>Black/White (2 versions)</span></div>
+        <div class="spec-row"><span>Attachment seam</span><span>3mm from top, bar-tack at both ends</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZE LABEL -->
+  <div class="section-title">02 — Size Label</div>
+  <div class="two-col" style="gap:8mm; margin-bottom:6mm;">
+    <div style="display:flex; gap:6mm; flex-wrap:wrap; align-items:center;">
+      <!-- SIZE LABELS PREVIEW -->
+      <div style="display:flex; gap:3mm; flex-wrap:wrap;">
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">XXS</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">XS</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">S</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">M</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">L</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">XL</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">XXL</div>
+        <div style="border:1px solid #1a1a1a; background:white; padding:4px 10px; font-size:9px; font-weight:700; letter-spacing:2px; min-width:36px; text-align:center;">XXXL</div>
+      </div>
+    </div>
+    <div class="spec-box">
+      <h4>Size Label Specs</h4>
+      <div class="spec-row"><span>Position</span><span>Below main neck label, attached together</span></div>
+      <div class="spec-row"><span>Type</span><span>Printed satin label</span></div>
+      <div class="spec-row"><span>Size</span><span>38 mm × 18 mm</span></div>
+      <div class="spec-row"><span>Background</span><span>White</span></div>
+      <div class="spec-row"><span>Text Color</span><span>Black</span></div>
+      <div class="spec-row"><span>Font</span><span>Bold condensed, caps, 2.5mm height</span></div>
+    </div>
+  </div>
+
+  <!-- CARE LABEL -->
+  <div class="section-title">03 — Care & Composition Label (Side Seam)</div>
+  <div class="two-col" style="gap:8mm;">
+    <div>
+      <!-- CARE LABEL PREVIEW -->
+      <div style="border:1px solid #1a1a1a; background:white; padding:6px 10px; display:inline-block; font-size:7px; line-height:1.7; min-width:130px;">
+        <div style="font-size:6px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border-bottom:0.5px solid #ccc; padding-bottom:3px; margin-bottom:4px;">SYLUM</div>
+        <div style="display:flex; gap:8px; font-size:12px; margin-bottom:4px;">
+          <!-- CARE SYMBOLS (text-based) -->
+          <span title="Machine wash 30°C">🌡️</span>
+          <span title="Do not bleach">✕</span>
+          <span title="Do not tumble dry">✕</span>
+          <span title="Iron low heat">△</span>
+          <span title="Do not dry clean">✕</span>
+        </div>
+        <div style="font-size:6.5px; line-height:1.6;">
+          <div>MACHINE WASH 30°C</div>
+          <div>DO NOT BLEACH</div>
+          <div>DO NOT TUMBLE DRY</div>
+          <div>IRON LOW HEAT</div>
+          <div>DO NOT DRY CLEAN</div>
+          <div style="margin-top:3px; padding-top:3px; border-top:0.5px solid #eee; color:#666;">80% COTTON / 20% POLYESTER</div>
+          <div style="color:#666;">MADE IN TURKEY</div>
+        </div>
+      </div>
+      <div style="font-size:6px; color:#888; margin-top:2mm;">Printed label (not woven) — thermal print</div>
+    </div>
+
+    <div>
+      <div class="spec-box">
+        <h4>Care Label Specs</h4>
+        <div class="spec-row"><span>Position</span><span>Left side seam, 15 cm from hem</span></div>
+        <div class="spec-row"><span>Type</span><span>Printed satin / taffeta label</span></div>
+        <div class="spec-row"><span>Size</span><span>50 mm wide × 80–90 mm tall</span></div>
+        <div class="spec-row"><span>Attachment</span><span>Sewn into side seam (all 4 sides)</span></div>
+        <div class="spec-row"><span>Print</span><span>Thermal print, black on white</span></div>
+        <div class="spec-row"><span>Language</span><span>English (add Hungarian if needed)</span></div>
+        <div class="spec-row"><span>Content</span><span>Care symbols + composition + origin</span></div>
+      </div>
+
+      <div class="note-box" style="margin-top:3mm;">
+        <strong>Legal:</strong> EU regulations require care labels with ISO symbols, fiber composition %, country of manufacture, and company info/address. Add SYLUM brand address before production.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">SYLUM — SY-HD-001 — OVERSIZED HOODIE — CONFIDENTIAL</div>
+  <div class="page-number">4 / 5</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 5 — BOM & COLORWAYS
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="brand-cell"><div class="logo-text">SYLUM</div></div>
+    <div style="display:contents">
+      <div class="header-cell label">Season</div>
+      <div class="header-cell label">Style No.</div>
+      <div class="header-cell label">Category</div>
+      <div class="header-cell label">Page</div>
+      <div class="header-cell label">Section</div>
+      <div class="header-cell label">Output</div>
+    </div>
+    <div style="display:contents">
+      <div class="header-cell value">2025 F/W</div>
+      <div class="header-cell value">SY-HD-001</div>
+      <div class="header-cell value">BOM & COLORWAYS</div>
+      <div class="header-cell value">5 / 5</div>
+      <div class="header-cell value">BILL OF MATERIALS</div>
+      <div class="header-cell value">2025 / 08 / 01</div>
+    </div>
+  </div>
+
+  <!-- BILL OF MATERIALS -->
+  <div class="section-title">Bill of Materials (BOM)</div>
+  <table style="margin-bottom:6mm; font-size:7.5px;">
+    <thead>
+      <tr>
+        <th style="width:5%; text-align:center;">#</th>
+        <th style="width:20%;">Item</th>
+        <th style="width:25%;">Description</th>
+        <th style="width:15%;">Supplier / Ref</th>
+        <th style="width:10%; text-align:center;">Qty/Unit</th>
+        <th style="width:12%;">Placement</th>
+        <th style="width:13%;">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-center td-bold">01</td>
+        <td class="td-label">Main Fabric</td>
+        <td>400g French Terry Fleece, 80% Cotton/20% Poly</td>
+        <td>Factory supplied</td>
+        <td class="td-center">~0.9m²/unit</td>
+        <td>Body, Hood, Sleeves</td>
+        <td>3 colorways</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">02</td>
+        <td class="td-label">Rib Fabric</td>
+        <td>1×1 Rib, 95% Cotton/5% Elastane</td>
+        <td>Factory supplied</td>
+        <td class="td-center">Match body</td>
+        <td>Cuffs & Hem</td>
+        <td>Color match body</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">03</td>
+        <td class="td-label">Drawstring</td>
+        <td>8mm flat drawstring, cotton/poly mix</td>
+        <td>Factory supplied</td>
+        <td class="td-center">2 × 110cm</td>
+        <td>Hood channel</td>
+        <td>Color match body</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">04</td>
+        <td class="td-label">Drawstring Tip</td>
+        <td>Metal aglet, antique silver or color match</td>
+        <td>Factory supplied</td>
+        <td class="td-center">4 pcs/unit</td>
+        <td>Drawstring ends</td>
+        <td>2 per cord</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">05</td>
+        <td class="td-label">Sewing Thread</td>
+        <td>Coats / Amann, 40/2, match body</td>
+        <td>Factory supplied</td>
+        <td class="td-center">As needed</td>
+        <td>All seams</td>
+        <td>Match each colorway</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">06</td>
+        <td class="td-label">Embroidery Thread</td>
+        <td>Madeira 40wt, White (9141) or Black (9000)</td>
+        <td>Madeira / Gunold</td>
+        <td class="td-center">Per factory req.</td>
+        <td>Left chest logo</td>
+        <td>2 thread colors total</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">07</td>
+        <td class="td-label">Embroidery Stabilizer</td>
+        <td>Cutaway stabilizer, medium weight</td>
+        <td>Factory supplied</td>
+        <td class="td-center">Per logo</td>
+        <td>Behind embroidery</td>
+        <td>Required for fleece</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">08</td>
+        <td class="td-label">Main Label (neck)</td>
+        <td>Woven damask label, 55×35mm folded, 2 colors</td>
+        <td>Woven label supplier</td>
+        <td class="td-center">1 pcs/unit</td>
+        <td>Center back neck</td>
+        <td>Black + White version</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">09</td>
+        <td class="td-label">Size Label</td>
+        <td>Printed satin, 38×18mm, white/black</td>
+        <td>Label supplier</td>
+        <td class="td-center">1 pcs/unit</td>
+        <td>Below main label</td>
+        <td>8 sizes</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">10</td>
+        <td class="td-label">Care Label</td>
+        <td>Printed taffeta, 50×85mm, care symbols + comp.</td>
+        <td>Label supplier</td>
+        <td class="td-center">1 pcs/unit</td>
+        <td>Left side seam</td>
+        <td>EU compliant</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">11</td>
+        <td class="td-label">Hangtag</td>
+        <td>Cardstock hangtag, SYLUM branding, 70×100mm</td>
+        <td>Print supplier</td>
+        <td class="td-center">1 pcs/unit</td>
+        <td>Attached to drawstring</td>
+        <td>TBD design</td>
+      </tr>
+      <tr>
+        <td class="td-center td-bold">12</td>
+        <td class="td-label">Polybag</td>
+        <td>Clear OPP polybag with SYLUM sticker</td>
+        <td>Factory supplied</td>
+        <td class="td-center">1 pcs/unit</td>
+        <td>Packaging</td>
+        <td>Size-specific bags</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- COLORWAYS -->
+  <div class="section-title">Colorways</div>
+  <div class="three-col" style="gap:5mm;">
+
+    <!-- BLACK -->
+    <div style="border:1.5px solid #1a1a1a; border-radius:3px; overflow:hidden;">
+      <div style="background:#1a1a1a; color:white; padding:6px 10px; font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:2px; text-align:center;">BLACK</div>
+      <div style="padding:5mm;">
+        <div style="width:100%; height:28mm; background:#1a1a1a; border-radius:2px; margin-bottom:3mm;"></div>
+        <div class="spec-row"><span>Style Code</span><span style="font-weight:700;">SY-HD-001-BLK</span></div>
+        <div class="spec-row"><span>Body</span><span>#1A1A1A — Jet Black</span></div>
+        <div class="spec-row"><span>Rib</span><span>#1A1A1A — Match body</span></div>
+        <div class="spec-row"><span>Drawstring</span><span>#1A1A1A — Black</span></div>
+        <div class="spec-row"><span>Embroidery</span><span>White — Madeira 9141</span></div>
+        <div class="spec-row"><span>Labels</span><span>Black base / white text</span></div>
+      </div>
+    </div>
+
+    <!-- OFF WHITE -->
+    <div style="border:1.5px solid #1a1a1a; border-radius:3px; overflow:hidden;">
+      <div style="background:#1a1a1a; color:white; padding:6px 10px; font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:2px; text-align:center;">OFF WHITE</div>
+      <div style="padding:5mm;">
+        <div style="width:100%; height:28mm; background:#F2EFE8; border:1px solid #ddd; border-radius:2px; margin-bottom:3mm;"></div>
+        <div class="spec-row"><span>Style Code</span><span style="font-weight:700;">SY-HD-001-OWH</span></div>
+        <div class="spec-row"><span>Body</span><span>#F2EFE8 — Off White</span></div>
+        <div class="spec-row"><span>Rib</span><span>#F2EFE8 — Match body</span></div>
+        <div class="spec-row"><span>Drawstring</span><span>#E0DDD6 — Tonal</span></div>
+        <div class="spec-row"><span>Embroidery</span><span>Black — Madeira 9000</span></div>
+        <div class="spec-row"><span>Labels</span><span>White base / black text</span></div>
+      </div>
+    </div>
+
+    <!-- ASH GREY -->
+    <div style="border:1.5px solid #1a1a1a; border-radius:3px; overflow:hidden;">
+      <div style="background:#1a1a1a; color:white; padding:6px 10px; font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:2px; text-align:center;">ASH GREY</div>
+      <div style="padding:5mm;">
+        <div style="width:100%; height:28mm; background:#8C8C8C; border-radius:2px; margin-bottom:3mm;"></div>
+        <div class="spec-row"><span>Style Code</span><span style="font-weight:700;">SY-HD-001-GRY</span></div>
+        <div class="spec-row"><span>Body</span><span>#8C8C8C — Ash Grey</span></div>
+        <div class="spec-row"><span>Rib</span><span>#8C8C8C — Match body</span></div>
+        <div class="spec-row"><span>Drawstring</span><span>#7A7A7A — Dark grey</span></div>
+        <div class="spec-row"><span>Embroidery</span><span>White — Madeira 9141</span></div>
+        <div class="spec-row"><span>Labels</span><span>Black base / white text</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">SYLUM — SY-HD-001 — OVERSIZED HOODIE — CONFIDENTIAL</div>
+  <div class="page-number">5 / 5</div>
+</div>
+
+</body>
+</html>

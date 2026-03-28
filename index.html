@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYLUM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══ RESET ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ═══ TOKENS ══════════════════════════════════════════ */
+    :root {
+      --acc: #EC407A;
+      --acc-rgb: 236, 64, 122;
+      --acc-glow: rgba(236, 64, 122, 0.38);
+      --acc-faint: rgba(236, 64, 122, 0.07);
+      --acc-border: rgba(236, 64, 122, 0.22);
+
+      --bg:   #080808;
+      --s1:   #0F0F0F;
+      --s2:   #141414;
+      --text: #FFFFFF;
+      --muted: rgba(255,255,255,0.42);
+      --border: rgba(255,255,255,0.06);
+      --t: 0.55s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══ GRAIN ═══════════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9999; opacity: 0.03;
+    }
+
+    /* ═══ NAV ════════════════════════════════════════════= */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 52px;
+      background: rgba(8,8,8,0.82);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    #nav-logo {
+      height: 100px; width: auto; display: block;
+      opacity: 0;
+      transition: opacity 0.4s ease, filter 0.5s ease;
+    }
+    #nav-logo.visible { opacity: 1; }
+    #nav-logo:hover { opacity: 0.72 !important; }
+
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.67rem; font-weight: 600;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      position: relative; transition: color 0.22s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--acc);
+      transition: width 0.3s ease, background-color var(--t);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ═══ HERO ════════════════════════════════════════════ */
+    .s-hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 32px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 5%, rgba(255,255,255,0.03) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 10% 90%, rgba(255,255,255,0.02) 0%, transparent 60%);
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 15vw, 12rem);
+      letter-spacing: 0.05em;
+      line-height: 0.82;
+      margin: 0 0 40px;
+      position: relative; z-index: 2;
+    }
+    .hero-scroll {
+      position: relative; z-index: 2;
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      display: flex; align-items: center; gap: 12px;
+      animation: fadeUp 1.2s 0.5s both;
+    }
+    .hero-scroll::before, .hero-scroll::after {
+      content: ''; display: block;
+      width: 40px; height: 1px;
+      background: rgba(255,255,255,0.15);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ═══ MARQUEE ═════════════════════════════════════════ */
+    .marquee-wrap {
+      overflow: hidden; background: var(--s1);
+      border-top: 1px solid var(--acc-border);
+      border-bottom: 1px solid var(--acc-border);
+      padding: 13px 0;
+      transition: border-color var(--t);
+    }
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-item {
+      display: flex; align-items: center; gap: 22px;
+      padding: 0 22px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.15em;
+      color: var(--acc); white-space: nowrap;
+      transition: color var(--t);
+    }
+    .mdot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--acc); flex-shrink: 0;
+      transition: background-color var(--t);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ═══ SHARED SECTION ══════════════════════════════════ */
+    .s-section { padding: 110px 0; }
+    .s-alt { background: var(--s1); }
+    .container {
+      max-width: 1280px; margin: 0 auto; padding: 0 60px;
+    }
+    .eyebrow {
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--acc); display: block; margin-bottom: 18px;
+      transition: color var(--t);
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      letter-spacing: 0.03em; line-height: 0.9;
+      margin-bottom: 56px;
+    }
+
+    /* ═══ PRODUCT GRID ════════════════════════════════════ */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .product-card {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      padding: 40px 36px 36px;
+      position: relative;
+      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .product-card:hover {
+      border-color: var(--acc-border);
+      transform: translateY(-4px);
+    }
+
+    /* accent stripe top */
+    .product-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--acc);
+      transition: background-color var(--t);
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--acc); border: 1px solid var(--acc-border);
+      padding: 5px 14px; margin-bottom: 24px;
+      transition: color var(--t), border-color var(--t);
+    }
+    .card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 4vw, 4rem);
+      letter-spacing: 0.03em; line-height: 0.88;
+      margin-bottom: 10px;
+    }
+    .card-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 0.08em;
+      color: var(--acc); margin-bottom: 28px;
+      transition: color var(--t);
+    }
+    .card-img {
+      height: 340px;
+      border: 1px dashed var(--acc-border);
+      background: var(--acc-faint);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px;
+      margin-bottom: 32px;
+      transition: border-color var(--t), background var(--t);
+    }
+    .card-img span {
+      font-size: 0.6rem; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--muted); opacity: 0.4;
+    }
+    .card-divider {
+      height: 1px; background: var(--border);
+      margin-bottom: 24px;
+    }
+    .card-features {
+      list-style: none; margin-bottom: 36px;
+    }
+    .card-features li {
+      font-size: 0.88rem; line-height: 1.6;
+      color: var(--muted); padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-features li:last-child { border-bottom: none; }
+    .card-features li::before {
+      content: '—'; color: var(--acc);
+      font-size: 0.75rem; flex-shrink: 0;
+      transition: color var(--t);
+    }
+
+    /* ═══ BUTTONS ═════════════════════════════════════════ */
+    .btn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem; letter-spacing: 0.18em;
+      text-decoration: none; border: none; cursor: pointer;
+      display: inline-block;
+      transition:
+        transform 0.28s cubic-bezier(0.34,1.56,0.64,1),
+        box-shadow 0.28s ease,
+        background-color var(--t),
+        border-color var(--t),
+        color var(--t);
+    }
+    .btn:active { transform: scale(0.97) !important; }
+
+    .btn-fill {
+      padding: 15px 46px; background: var(--acc); color: #fff;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      box-shadow: 0 4px 28px var(--acc-glow);
+    }
+    .btn-fill:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 44px var(--acc-glow);
+    }
+    .btn-outline {
+      padding: 13px 40px; background: transparent;
+      color: var(--text); border: 1px solid rgba(255,255,255,0.18);
+    }
+    .btn-outline:hover { border-color: var(--acc); color: var(--acc); transform: translateY(-2px); }
+
+    /* ═══ SIZE GUIDE ══════════════════════════════════════ */
+    .size-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 56px;
+    }
+    .size-note {
+      font-size: 0.9rem; line-height: 1.85;
+      color: var(--muted);
+    }
+    .measure-list {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    .measure-list li {
+      display: flex; gap: 14px; align-items: baseline;
+      font-size: 0.9rem; color: var(--muted);
+    }
+    .measure-key {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.06em;
+      color: var(--acc); flex-shrink: 0; width: 24px;
+      transition: color var(--t);
+    }
+
+    .size-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+    .size-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.85rem; min-width: 700px;
+    }
+    .size-table thead tr {
+      background: var(--acc);
+      transition: background-color var(--t);
+    }
+    .size-table thead th {
+      padding: 14px 18px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem; letter-spacing: 0.12em;
+      color: #fff; font-weight: 400; white-space: nowrap;
+    }
+    .size-table thead th:first-child { text-align: left; }
+    .size-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.2s;
+    }
+    .size-table tbody tr:last-child { border-bottom: none; }
+    .size-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .size-table td {
+      padding: 14px 18px;
+      color: var(--muted); text-align: center;
+    }
+    .size-table td:first-child {
+      text-align: left; color: var(--text); font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      white-space: nowrap;
+    }
+    .td-letter {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; letter-spacing: 0.06em;
+      color: var(--acc); width: 20px; flex-shrink: 0;
+      transition: color var(--t);
+    }
+    .td-val {
+      font-weight: 600; color: var(--text);
+    }
+    .td-note {
+      font-size: 0.78rem; color: rgba(255,255,255,0.28);
+    }
+    .size-unit {
+      margin-top: 16px; text-align: right;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.22);
+    }
+
+    /* ═══ EMAIL / CTA ═════════════════════════════════════ */
+    .s-cta { border-top: 1px solid var(--border); }
+    .cta-inner {
+      max-width: 620px; margin: 0 auto;
+      padding: 120px 32px; text-align: center;
+    }
+    .cta-badge {
+      display: inline-block;
+      padding: 8px 22px; margin-bottom: 28px;
+      border: 1px solid var(--acc-border);
+      background: var(--acc-faint);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--acc);
+      transition: border-color var(--t), background-color var(--t), color var(--t);
+    }
+    .cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 7.5rem);
+      letter-spacing: 0.04em; line-height: 0.86;
+      margin-bottom: 18px;
+    }
+    .cta-sub {
+      font-size: 0.9rem; line-height: 1.75;
+      color: var(--muted); margin-bottom: 44px;
+    }
+    .cta-form { display: flex; margin-bottom: 20px; }
+    .cta-input {
+      flex: 1; padding: 16px 22px;
+      background: var(--s2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-right: none;
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-input:focus { border-color: var(--acc); }
+    .cta-input::placeholder { color: rgba(255,255,255,0.2); }
+    .cta-submit {
+      padding: 16px 34px; background: var(--acc); color: #fff;
+      font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem;
+      letter-spacing: 0.16em; border: none; cursor: pointer;
+      white-space: nowrap;
+      transition: background-color var(--t), filter 0.2s;
+    }
+    .cta-submit:hover { filter: brightness(1.15); }
+    .cta-legal {
+      font-size: 0.68rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.22); line-height: 1.6;
+    }
+    .cta-legal span { color: var(--acc); transition: color var(--t); }
+
+    /* ═══ FOOTER ══════════════════════════════════════════ */
+    footer {
+      background: var(--s1);
+      border-top: 1px solid var(--border);
+      padding: 36px 56px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .footer-logo-img { height: 28px; width: auto; opacity: 0.5; }
+    .footer-links {
+      display: flex; gap: 28px; list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.63rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      font-size: 0.6rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.14);
+    }
+
+    /* ═══ SCROLL REVEAL ═══════════════════════════════════ */
+    body.js-ready .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.72s ease, transform 0.72s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    body.js-ready .reveal.in { opacity: 1; transform: none; }
+    .rd1 { transition-delay: 0.08s; }
+    .rd2 { transition-delay: 0.18s; }
+    .rd3 { transition-delay: 0.28s; }
+    .rd4 { transition-delay: 0.38s; }
+
+    /* ═══ RESPONSIVE ══════════════════════════════════════ */
+    @media (max-width: 960px) {
+      nav { padding: 15px 24px; }
+      .container { padding: 0 28px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .size-intro { grid-template-columns: 1fr; gap: 40px; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 580px) {
+      nav { padding: 14px 18px; }
+      .nav-links { gap: 18px; }
+      .cta-form { flex-direction: column; }
+      .cta-input { border-right: 1px solid rgba(255,255,255,0.07); border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Grain -->
+<svg class="grain" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+
+<!-- ══ NAV (logo hidden on hero) ═════════════════════════ -->
+<nav aria-label="Main navigation">
+  <img id="nav-logo" src="logo-pink.png" alt="SYLUM" />
+  <ul class="nav-links">
+    <li><a href="#products">Collection</a></li>
+    <li><a href="#sizes">Size Guide</a></li>
+    <li><a href="#join">Join</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ══ PAGE 1 — HERO (no nav logo, no accent) ══════════ -->
+  <section id="hero" class="s-hero"
+    data-acc-rgb="255,255,255"
+    data-logo="none"
+    data-logo-invert="0">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <h1 class="hero-title">SYLUM</h1>
+    <p class="hero-scroll">Scroll to explore</p>
+  </section>
+
+  <!-- Marquee between pages -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-item">SYLUM <span class="mdot"></span> SS25 <span class="mdot"></span> NEW DROP <span class="mdot"></span> LIMITED EDITION <span class="mdot"></span> NO RESTOCKS <span class="mdot"></span> STREETWEAR <span class="mdot"></span> DRIP DIFFERENT <span class="mdot"></span></div>
+      <div class="marquee-item" aria-hidden="true">SYLUM <span class="mdot"></span> SS25 <span class="mdot"></span> NEW DROP <span class="mdot"></span> LIMITED EDITION <span class="mdot"></span> NO RESTOCKS <span class="mdot"></span> STREETWEAR <span class="mdot"></span> DRIP DIFFERENT <span class="mdot"></span></div>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 2 — PRODUCTS / Pink + black ════════════════ -->
+  <section id="products" class="s-section"
+    data-acc-rgb="236,64,122"
+    data-logo="logo-pink.png"
+    data-logo-invert="0">
+    <div class="container">
+      <span class="eyebrow reveal">SS25 Collection</span>
+      <h2 class="section-title reveal rd1">THE DROPS</h2>
+
+      <div class="product-grid">
+
+        <!-- TEE -->
+        <article class="product-card reveal rd1">
+          <div class="card-img"><span>Photo coming soon</span></div>
+          <div class="card-tag">SS25 — Drop 001</div>
+          <h3 class="card-name">SYLUM<br>DRIP TEE</h3>
+          <p class="card-price">€69</p>
+          <div class="card-divider"></div>
+          <ul class="card-features">
+            <li>280gsm heavyweight cotton</li>
+            <li>Oversized boxy fit</li>
+            <li>Drip logo embroidered — left chest</li>
+            <li>Sizes XXS — XXXL</li>
+            <li>Black / Off White / Ash Grey</li>
+          </ul>
+          <a href="#join" class="btn btn-fill">GET NOTIFIED</a>
+        </article>
+
+        <!-- HOODIE -->
+        <article class="product-card reveal rd2">
+          <div class="card-img"><span>Photo coming soon</span></div>
+          <div class="card-tag">SS25 — Drop 002</div>
+          <h3 class="card-name">SYLUM<br>REVERSIBLE<br>HOODIE</h3>
+          <p class="card-price">€149</p>
+          <div class="card-divider"></div>
+          <ul class="card-features">
+            <li>500gsm French terry — premium weight</li>
+            <li>Oversized boxy cut, no zipper</li>
+            <li>Side A: Black / Purple drip logo</li>
+            <li>Side B: Purple / Black drip logo</li>
+            <li>Sizes XXS — XXXL</li>
+          </ul>
+          <a href="#join" class="btn btn-fill">GET NOTIFIED</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PAGE 3 — SIZE GUIDE / Purple + black ════════════ -->
+  <section id="sizes" class="s-section s-alt"
+    data-acc-rgb="124,58,237"
+    data-logo="logo-purple.png"
+    data-logo-invert="0">
+    <div class="container">
+      <span class="eyebrow reveal">Measurements in cm</span>
+      <h2 class="section-title reveal rd1">SIZE GUIDE</h2>
+
+      <div class="size-intro reveal rd2">
+        <p class="size-note">
+          All measurements are in <strong>centimetres (cm)</strong>.
+          Our hoodies and tees are cut oversized — if you prefer a closer fit,
+          size down. When in doubt, go up. Measurements taken flat on a table.
+        </p>
+        <ul class="measure-list">
+          <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
+          <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
+          <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
+          <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
+        </ul>
+      </div>
+
+      <div class="size-table-wrap reveal rd3">
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Measurement</th>
+              <th>XXS</th><th>XS</th><th>S</th><th>M</th>
+              <th>L</th><th>XL</th><th>XXL</th><th>XXXL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="td-letter">A</span>Length HSP</td>
+              <td class="td-val">61</td><td class="td-val">63</td><td class="td-val">65</td><td class="td-val">67</td>
+              <td class="td-val">69</td><td class="td-val">71</td><td class="td-val">73</td><td class="td-val">75</td>
+            </tr>
+            <tr>
+              <td><span class="td-letter">B</span>½ Chest</td>
+              <td class="td-val">60</td><td class="td-val">62</td><td class="td-val">64</td><td class="td-val">66</td>
+              <td class="td-val">68</td><td class="td-val">70</td><td class="td-val">72</td><td class="td-val">74</td>
+            </tr>
+            <tr>
+              <td><span class="td-letter">C</span>½ Hem</td>
+              <td class="td-val">37</td><td class="td-val">39</td><td class="td-val">41</td><td class="td-val">43</td>
+              <td class="td-val">45</td><td class="td-val">47</td><td class="td-val">49</td><td class="td-val">51</td>
+            </tr>
+            <tr>
+              <td><span class="td-letter">D</span>Sleeve Length</td>
+              <td class="td-val">56</td><td class="td-val">57.5</td><td class="td-val">59</td><td class="td-val">60.5</td>
+              <td class="td-val">62</td><td class="td-val">63.5</td><td class="td-val">65</td><td class="td-val">66.5</td>
+            </tr>
+            <tr>
+              <td><span class="td-letter"></span>Full Chest</td>
+              <td class="td-note">120</td><td class="td-note">124</td><td class="td-note">128</td><td class="td-note">132</td>
+              <td class="td-note">136</td><td class="td-note">140</td><td class="td-note">144</td><td class="td-note">148</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="size-unit">All measurements in cm — lay flat</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PAGE 4 — EMAIL / Black + white ══════════════════ -->
+  <section id="join" class="s-section s-cta"
+    data-acc-rgb="240,240,240"
+    data-logo="logo-black.png"
+    data-logo-invert="1">
+    <div class="cta-inner">
+      <div class="cta-badge reveal">10% Off Your First Order</div>
+      <h2 class="cta-title reveal rd1">JOIN<br>THE LIST.</h2>
+      <p class="cta-sub reveal rd2">
+        Get early access to every drop — 24 hours before anyone else.<br>
+        Plus <strong>10% off</strong> your first order when you sign up.
+      </p>
+      <form class="cta-form reveal rd3" onsubmit="handleSignup(event)" aria-label="Email signup">
+        <input type="email" class="cta-input" id="email-input" placeholder="your@email.com" aria-label="Email" autocomplete="email" required />
+        <button type="submit" class="cta-submit">GET 10% OFF</button>
+      </form>
+      <p class="cta-legal reveal rd4">
+        By signing up you agree to receive drop alerts from SYLUM.<br>
+        <span>10% discount</span> applies to your first purchase. No spam, ever.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════ -->
+<footer>
+  <img id="footer-logo" src="logo-purple.png" alt="SYLUM" class="footer-logo-img" />
+  <ul class="footer-links">
+    <li><a href="#products">Collection</a></li>
+    <li><a href="#sizes">Size Guide</a></li>
+    <li><a href="#join">Join the List</a></li>
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">TikTok</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 SYLUM. All rights reserved.</p>
+</footer>
+
+<script>
+  /* ─── JS ready ───────────────────────────────────────── */
+  document.body.classList.add('js-ready');
+
+  /* ─── Logo white-bg removal ──────────────────────────── */
+  function processLogo(src, threshold) {
+    threshold = threshold || 210;
+    return new Promise(function(resolve) {
+      var img = new Image();
+      img.onload = function() {
+        try {
+          var c = document.createElement('canvas');
+          var ctx = c.getContext('2d', { willReadFrequently: true });
+          c.width = img.naturalWidth; c.height = img.naturalHeight;
+          ctx.drawImage(img, 0, 0);
+          var d = ctx.getImageData(0, 0, c.width, c.height);
+          var px = d.data;
+          for (var i = 0; i < px.length; i += 4) {
+            var r = px[i], g = px[i+1], b = px[i+2];
+            var brightness = (r + g + b) / 3;
+            var max = Math.max(r, g, b);
+            var sat = max === 0 ? 0 : (max - Math.min(r, g, b)) / max;
+            if (brightness > threshold && sat < 0.18) {
+              var fade = Math.max(0, 1 - (brightness - threshold) / (255 - threshold));
+              px[i+3] = Math.round(px[i+3] * fade);
+            }
+          }
+          ctx.putImageData(d, 0, 0);
+          resolve(c.toDataURL('image/png'));
+        } catch(e) { resolve(src); }
+      };
+      img.onerror = function() { resolve(src); };
+      img.src = src;
+    });
+  }
+
+  var logoCache = {};
+
+  Promise.all([
+    processLogo('logo-pink.png',   210),
+    processLogo('logo-purple.png', 210),
+    processLogo('logo-black.png',  180)
+  ]).then(function(r) {
+    logoCache['logo-pink.png']   = r[0];
+    logoCache['logo-purple.png'] = r[1];
+    logoCache['logo-black.png']  = r[2];
+
+    /* Set footer logo */
+    var fl = document.getElementById('footer-logo');
+    fl.src = r[1];
+    fl.style.filter = 'none';
+  });
+
+  /* ─── Scroll-based theme + nav logo ─────────────────── */
+  var root = document.documentElement;
+  var navLogo = document.getElementById('nav-logo');
+
+  function applyTheme(el) {
+    var accRgb    = el.dataset.accRgb;
+    var logoSrc   = el.dataset.logo;
+    var logoInv   = el.dataset.logoInvert;
+
+    root.style.setProperty('--acc-rgb',    accRgb);
+    root.style.setProperty('--acc',        'rgb(' + accRgb + ')');
+    root.style.setProperty('--acc-glow',   'rgba(' + accRgb + ', 0.38)');
+    root.style.setProperty('--acc-faint',  'rgba(' + accRgb + ', 0.07)');
+    root.style.setProperty('--acc-border', 'rgba(' + accRgb + ', 0.22)');
+
+    /* Nav logo visibility and source */
+    if (logoSrc === 'none') {
+      navLogo.classList.remove('visible');
+    } else {
+      navLogo.classList.add('visible');
+      var cached = logoCache[logoSrc];
+      if (cached) {
+        navLogo.src = cached;
+        navLogo.style.filter = logoInv === '1' ? 'invert(1) brightness(0.88)' : 'none';
+      }
+    }
+  }
+
+  var sections = document.querySelectorAll('[data-acc-rgb]');
+  var lastSection = null;
+
+  function updateTheme() {
+    var mid = window.innerHeight * 0.5;
+    var current = null;
+    sections.forEach(function(s) {
+      if (s.getBoundingClientRect().top <= mid) current = s;
+    });
+    if (current && current !== lastSection) {
+      lastSection = current;
+      applyTheme(current);
+    }
+  }
+
+  window.addEventListener('scroll', updateTheme, { passive: true });
+  updateTheme();
+
+  /* ─── Scroll reveal ──────────────────────────────────── */
+  var revealObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+
+  /* ─── Email signup ───────────────────────────────────── */
+  function handleSignup(e) {
+    e.preventDefault();
+    var input  = document.getElementById('email-input');
+    var btn    = e.target.querySelector('.cta-submit');
+    var email  = input.value.trim();
+    if (!email) return;
+
+    btn.textContent = '✓ YOU\'RE IN';
+    btn.style.background = 'rgb(' + root.style.getPropertyValue('--acc-rgb') + ')';
+    input.value = '';
+    input.placeholder = 'Check your inbox!';
+    input.disabled = true;
+    btn.disabled = true;
+
+    /* After 3s reset */
+    setTimeout(function() {
+      btn.textContent = 'GET 10% OFF';
+      input.placeholder = 'your@email.com';
+      input.disabled = false;
+      btn.disabled = false;
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
