@@ -36,6 +36,7 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
+    body.cs-active { overflow: hidden; }
 
     /* ═══ GRAIN ═══════════════════════════════════════════ */
     .grain {
@@ -756,7 +757,7 @@
   #cs-pw-submit:hover { opacity: 0.84; }
   </style>
 </head>
-<body>
+<body class="cs-active">
 
 <!-- ══ COMING SOON OVERLAY ══════════════════════════════════ -->
 <div id="cs-overlay">
@@ -1114,6 +1115,7 @@
       if (pwInput.value === PASSWORD) {
         overlay.classList.add('hidden');
         modalBg.classList.remove('open');
+        document.body.classList.remove('cs-active');
         setTimeout(function() { overlay.style.display = 'none'; }, 650);
         requestAnimationFrame(function() {
           var heroTitle = document.querySelector('.hero-title');
