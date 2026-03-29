@@ -477,12 +477,11 @@
     }
     .size-mockup-img {
       display: block;
-      width: 200px;
-      height: 320px;
+      width: auto;
+      height: 420px;
       object-fit: contain;
       object-position: top center;
       opacity: 0.88;
-      flex-shrink: 0;
     }
 
     .size-tabs-viewport { overflow: hidden; }
@@ -495,10 +494,13 @@
 
     .size-intro {
       display: grid;
-      grid-template-columns: auto 1fr 1fr;
+      grid-template-columns: 1fr auto;
       gap: 56px;
       align-items: start;
       margin-bottom: 56px;
+    }
+    .size-text {
+      display: flex; flex-direction: column; gap: 28px;
     }
     .size-note {
       font-size: 0.9rem; line-height: 1.85;
@@ -669,7 +671,7 @@
       .product-grid { grid-template-columns: 1fr; gap: 20px; }
       .card-img { height: 280px; }
       .size-intro { grid-template-columns: 1fr; gap: 32px; }
-      .size-mockup-img { width: 160px; height: 240px; }
+      .size-mockup-img { width: 100%; height: auto; max-height: 280px; }
       .cta-inner { padding: 80px 24px; }
       footer { flex-direction: column; text-align: center; gap: 24px; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -1084,18 +1086,20 @@
       <div class="size-tab-panel" id="size-panel-tee">
         <h3 class="size-panel-title">Reversible Tee</h3>
         <div class="size-intro reveal rd3">
+          <div class="size-text">
+            <p class="size-note">
+              All measurements are in <strong>centimetres (cm)</strong>.
+              The Reversible Tee is cut oversized — if you prefer a closer fit, size down.
+              Measurements taken flat on a table.
+            </p>
+            <ul class="measure-list">
+              <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
+              <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
+              <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
+              <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
+            </ul>
+          </div>
           <img class="size-mockup-img" src="mockups/hoodie-mockup.png" alt="Reversible Tee measurement diagram" />
-          <p class="size-note">
-            All measurements are in <strong>centimetres (cm)</strong>.
-            The Reversible Tee is cut oversized — if you prefer a closer fit, size down.
-            Measurements taken flat on a table.
-          </p>
-          <ul class="measure-list">
-            <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
-            <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
-            <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
-            <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
-          </ul>
         </div>
         <div class="size-table-wrap reveal rd4">
           <table class="size-table">
@@ -1137,18 +1141,20 @@
       <div class="size-tab-panel" id="size-panel-hoodie">
         <h3 class="size-panel-title">Reversible Hoodie</h3>
         <div class="size-intro">
+          <div class="size-text">
+            <p class="size-note">
+              All measurements are in <strong>centimetres (cm)</strong>.
+              The Reversible Hoodie is cut oversized — if you prefer a closer fit, size down.
+              Measurements taken flat on a table.
+            </p>
+            <ul class="measure-list">
+              <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
+              <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
+              <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
+              <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
+            </ul>
+          </div>
           <img class="size-mockup-img" src="mockups/tee-mockup.png" alt="Reversible Hoodie measurement diagram" />
-          <p class="size-note">
-            All measurements are in <strong>centimetres (cm)</strong>.
-            The Reversible Hoodie is cut oversized — if you prefer a closer fit, size down.
-            Measurements taken flat on a table.
-          </p>
-          <ul class="measure-list">
-            <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
-            <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
-            <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
-            <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
-          </ul>
         </div>
         <div class="size-table-wrap">
           <table class="size-table">
