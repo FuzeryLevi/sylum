@@ -445,6 +445,16 @@
       overflow: hidden;
       width: fit-content;
       margin-bottom: 48px;
+      position: relative;
+    }
+    .size-tab-indicator {
+      position: absolute; top: 0; bottom: 0;
+      width: 50%;
+      background: var(--acc);
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color var(--t);
+      pointer-events: none;
+      z-index: 0;
     }
     .size-tab-btn {
       background: none; border: none; cursor: pointer;
@@ -452,14 +462,11 @@
       font-size: 1rem; letter-spacing: 0.18em;
       color: var(--muted);
       padding: 12px 32px;
-      transition: background 0.2s, color 0.2s;
-      position: relative;
+      transition: color 0.35s;
+      position: relative; z-index: 1;
     }
     .size-tab-btn + .size-tab-btn { border-left: 1px solid var(--border); }
-    .size-tab-btn.active {
-      background: var(--acc);
-      color: #fff;
-    }
+    .size-tab-btn.active { color: #fff; }
     .size-panel-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2rem, 6vw, 3.2rem);
@@ -1061,6 +1068,7 @@
 
       <!-- Tab toggle -->
       <div class="size-tabs reveal rd2">
+        <div class="size-tab-indicator" id="size-tab-indicator"></div>
         <button class="size-tab-btn active" data-tab="tee">Reversible Tee</button>
         <button class="size-tab-btn" data-tab="hoodie">Reversible Hoodie</button>
       </div>
@@ -1073,7 +1081,7 @@
       <div class="size-tab-panel" id="size-panel-tee">
         <h3 class="size-panel-title">Reversible Tee</h3>
         <div class="size-intro reveal rd3">
-          <img class="size-mockup-img" src="mockups/tee-mockup.png" alt="Reversible Tee measurement diagram" />
+          <img class="size-mockup-img" src="mockups/hoodie-mockup.png" alt="Reversible Tee measurement diagram" />
           <p class="size-note">
             All measurements are in <strong>centimetres (cm)</strong>.
             The Reversible Tee is cut oversized — if you prefer a closer fit, size down.
@@ -1126,7 +1134,7 @@
       <div class="size-tab-panel" id="size-panel-hoodie">
         <h3 class="size-panel-title">Reversible Hoodie</h3>
         <div class="size-intro">
-          <img class="size-mockup-img" src="mockups/hoodie-mockup.png" alt="Reversible Hoodie measurement diagram" />
+          <img class="size-mockup-img" src="mockups/tee-mockup.png" alt="Reversible Hoodie measurement diagram" />
           <p class="size-note">
             All measurements are in <strong>centimetres (cm)</strong>.
             The Reversible Hoodie is cut oversized — if you prefer a closer fit, size down.
@@ -1413,14 +1421,16 @@
 
   /* ─── Size Guide tabs ───────────────────────────────── */
   (function() {
-    var btns  = document.querySelectorAll('.size-tab-btn');
-    var track = document.querySelector('.size-tabs-track');
+    var btns      = document.querySelectorAll('.size-tab-btn');
+    var track     = document.querySelector('.size-tabs-track');
+    var indicator = document.getElementById('size-tab-indicator');
     btns.forEach(function(btn) {
       btn.addEventListener('click', function() {
         btns.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
         var idx = btn.getAttribute('data-tab') === 'tee' ? 0 : 1;
-        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+        track.style.transform     = 'translateX(-' + (idx * 100) + '%)';
+        indicator.style.transform = idx === 0 ? '' : 'translateX(100%)';
       });
     });
   })();
