@@ -449,9 +449,9 @@
     }
     .size-tab-indicator {
       position: absolute; top: 0; bottom: 0;
-      width: 50%;
       background: var(--acc);
       transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
                   background-color var(--t);
       pointer-events: none;
       z-index: 0;
@@ -1424,13 +1424,26 @@
     var btns      = document.querySelectorAll('.size-tab-btn');
     var track     = document.querySelector('.size-tabs-track');
     var indicator = document.getElementById('size-tab-indicator');
+
+    function moveIndicator(btn) {
+      indicator.style.width     = btn.offsetWidth + 'px';
+      indicator.style.transform = 'translateX(' + btn.offsetLeft + 'px)';
+    }
+
+    // Set initial position without transition
+    indicator.style.transition = 'none';
+    moveIndicator(document.querySelector('.size-tab-btn.active'));
+    requestAnimationFrame(function() {
+      indicator.style.transition = '';
+    });
+
     btns.forEach(function(btn) {
       btn.addEventListener('click', function() {
         btns.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
         var idx = btn.getAttribute('data-tab') === 'tee' ? 0 : 1;
-        track.style.transform     = 'translateX(-' + (idx * 100) + '%)';
-        indicator.style.transform = idx === 0 ? '' : 'translateX(100%)';
+        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+        moveIndicator(btn);
       });
     });
   })();
