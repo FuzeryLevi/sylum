@@ -837,6 +837,21 @@
   }
   #cs-inline-notify-success.show { display: block; }
 
+  /* ─── Mobile plasma fallback (CSS gradient replaces WebGL) ─ */
+  @keyframes mobilePlasmaBg {
+    0%   { background-position: 0% 40%; }
+    50%  { background-position: 100% 60%; }
+    100% { background-position: 0% 40%; }
+  }
+  .mobile-plasma {
+    background: linear-gradient(-55deg,
+      #080818 0%, #150430 25%, #220650 50%,
+      #0d0025 75%, #1a0840 100%) !important;
+    background-size: 500% 500% !important;
+    animation: mobilePlasmaBg 10s ease infinite;
+  }
+  .mobile-plasma .shader-canvas { display: none !important; }
+
   /* Password modal */
   #cs-modal-bg {
     position: fixed; inset: 0; z-index: 100001;
@@ -1703,10 +1718,20 @@ void main() {
       };
     }
 
-    window._csShaderStop = initShader(document.getElementById('shader-cs'));
-    window._heroShaderStart = function() {
-      initShader(document.getElementById('shader-hero'));
-    };
+    var isMobile = navigator.maxTouchPoints > 0 || ('ontouchstart' in window);
+    if (isMobile) {
+      document.getElementById('cs-overlay').classList.add('mobile-plasma');
+      window._csShaderStop = function(){};
+      window._heroShaderStart = function() {
+        var hero = document.getElementById('hero');
+        if (hero) hero.classList.add('mobile-plasma');
+      };
+    } else {
+      window._csShaderStop = initShader(document.getElementById('shader-cs'));
+      window._heroShaderStart = function() {
+        initShader(document.getElementById('shader-hero'));
+      };
+    }
   })();
 
   /* ─── Email signup ───────────────────────────────────── */
