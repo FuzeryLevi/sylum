@@ -411,7 +411,58 @@
     }
     .btn-outline:hover { border-color: var(--acc); color: var(--acc); transform: translateY(-2px); }
 
+    /* ═══ CARD SIZE PICKER ════════════════════════════════ */
+    .card-action {
+      display: flex; gap: 10px; align-items: stretch;
+      padding: 0 0 0 0;
+    }
+    .size-select {
+      flex: 0 0 auto;
+      appearance: none; -webkit-appearance: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: inherit; font-size: 0.65rem;
+      font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0 36px 0 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+    .size-select:focus { outline: none; border-color: rgba(var(--acc-rgb), 0.4); }
+    .size-select option { background: #1a1a1a; color: #fff; }
+    .card-action .btn-fill { flex: 1; padding: 15px 20px; }
+
     /* ═══ SIZE GUIDE ══════════════════════════════════════ */
+    .size-tabs {
+      display: flex; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      width: fit-content;
+      margin-bottom: 48px;
+    }
+    .size-tab-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; letter-spacing: 0.18em;
+      color: var(--muted);
+      padding: 12px 32px;
+      transition: background 0.2s, color 0.2s;
+      position: relative;
+    }
+    .size-tab-btn + .size-tab-btn { border-left: 1px solid var(--border); }
+    .size-tab-btn.active {
+      background: var(--acc);
+      color: #fff;
+    }
+    .size-tab-panel { display: none; }
+    .size-tab-panel.active { display: block; }
+
     .size-intro {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -607,7 +658,8 @@
       .card-price { margin: 0 24px 22px; }
       .card-divider { margin: 0 24px 18px; }
       .card-features { margin: 0 24px 28px; }
-      .btn-fill { display: block; text-align: center; margin: 0 24px; padding: 16px; }
+      .card-action { margin: 0 24px; }
+      .card-action .btn-fill { padding: 16px; }
       .cta-inner { padding: 56px 16px; }
       .cta-form { flex-direction: column; }
       .cta-input {
@@ -864,7 +916,6 @@
   <img id="nav-logo" src="logo-pink.png" alt="SYLUM" />
   <ul class="nav-links">
     <li><a href="#products">Collection</a></li>
-    <li><a href="#sizes">Size Guide</a></li>
     <li><a href="#join">Join</a></li>
   </ul>
   <button class="nav-cart" aria-label="Cart">
@@ -904,7 +955,7 @@
     data-logo-invert="0">
     <div class="container">
       <span class="eyebrow reveal">SS25 Collection</span>
-      <h2 class="section-title reveal rd1">THE DROPS</h2>
+      <h2 class="section-title reveal rd1">REVERSIBLE STREETWEAR</h2>
 
       <div class="product-grid">
 
@@ -912,17 +963,25 @@
         <article class="product-card reveal rd1">
           <div class="card-img"><span>Photo coming soon</span></div>
           <div class="card-tag">SS25 — Drop 001</div>
-          <h3 class="card-name">SYLUM<br>DRIP TEE</h3>
+          <h3 class="card-name">SYLUM<br>REVERSIBLE TEE</h3>
           <p class="card-price">13 000 Ft</p>
           <div class="card-divider"></div>
           <ul class="card-features">
             <li>280gsm heavyweight cotton</li>
             <li>Oversized boxy fit</li>
-            <li>Drip logo embroidered — left chest</li>
+            <li>Reversible logo embroidered — left chest</li>
             <li>Sizes XXS — XXXL</li>
             <li>Black / Off White / Ash Grey</li>
           </ul>
-          <button class="btn btn-fill add-to-basket" data-product="SYLUM DRIP TEE — 13 000 Ft">Add to Basket</button>
+          <div class="card-action">
+            <select class="size-select" aria-label="Select size">
+              <option value="">Size</option>
+              <option>XXS</option><option>XS</option><option>S</option>
+              <option>M</option><option>L</option><option>XL</option>
+              <option>XXL</option><option>XXXL</option>
+            </select>
+            <button class="btn btn-fill add-to-basket" data-product="SYLUM REVERSIBLE TEE — 13 000 Ft">Add to Basket</button>
+          </div>
         </article>
 
         <!-- HOODIE -->
@@ -939,7 +998,15 @@
             <li>Side B: Purple / Black drip logo</li>
             <li>Sizes XXS — XXXL</li>
           </ul>
-          <button class="btn btn-fill add-to-basket" data-product="SYLUM REVERSIBLE HOODIE — 26 000 Ft">Add to Basket</button>
+          <div class="card-action">
+            <select class="size-select" aria-label="Select size">
+              <option value="">Size</option>
+              <option>XXS</option><option>XS</option><option>S</option>
+              <option>M</option><option>L</option><option>XL</option>
+              <option>XXL</option><option>XXXL</option>
+            </select>
+            <button class="btn btn-fill add-to-basket" data-product="SYLUM REVERSIBLE HOODIE — 26 000 Ft">Add to Basket</button>
+          </div>
         </article>
 
       </div>
@@ -955,59 +1022,119 @@
       <span class="eyebrow reveal">Measurements in cm</span>
       <h2 class="section-title reveal rd1">SIZE GUIDE</h2>
 
-      <div class="size-intro reveal rd2">
-        <p class="size-note">
-          All measurements are in <strong>centimetres (cm)</strong>.
-          Our hoodies and tees are cut oversized — if you prefer a closer fit,
-          size down. When in doubt, go up. Measurements taken flat on a table.
-        </p>
-        <ul class="measure-list">
-          <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
-          <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
-          <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
-          <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
-        </ul>
+      <!-- Tab toggle -->
+      <div class="size-tabs reveal rd2">
+        <button class="size-tab-btn active" data-tab="tee">Reversible Tee</button>
+        <button class="size-tab-btn" data-tab="hoodie">Reversible Hoodie</button>
       </div>
 
-      <div class="size-table-wrap reveal rd3">
-        <table class="size-table">
-          <thead>
-            <tr>
-              <th>Measurement</th>
-              <th>XXS</th><th>XS</th><th>S</th><th>M</th>
-              <th>L</th><th>XL</th><th>XXL</th><th>XXXL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="td-letter">A</span>Length HSP</td>
-              <td class="td-val">61</td><td class="td-val">63</td><td class="td-val">65</td><td class="td-val">67</td>
-              <td class="td-val">69</td><td class="td-val">71</td><td class="td-val">73</td><td class="td-val">75</td>
-            </tr>
-            <tr>
-              <td><span class="td-letter">B</span>½ Chest</td>
-              <td class="td-val">60</td><td class="td-val">62</td><td class="td-val">64</td><td class="td-val">66</td>
-              <td class="td-val">68</td><td class="td-val">70</td><td class="td-val">72</td><td class="td-val">74</td>
-            </tr>
-            <tr>
-              <td><span class="td-letter">C</span>½ Hem</td>
-              <td class="td-val">37</td><td class="td-val">39</td><td class="td-val">41</td><td class="td-val">43</td>
-              <td class="td-val">45</td><td class="td-val">47</td><td class="td-val">49</td><td class="td-val">51</td>
-            </tr>
-            <tr>
-              <td><span class="td-letter">D</span>Sleeve Length</td>
-              <td class="td-val">56</td><td class="td-val">57.5</td><td class="td-val">59</td><td class="td-val">60.5</td>
-              <td class="td-val">62</td><td class="td-val">63.5</td><td class="td-val">65</td><td class="td-val">66.5</td>
-            </tr>
-            <tr>
-              <td><span class="td-letter"></span>Full Chest</td>
-              <td class="td-note">120</td><td class="td-note">124</td><td class="td-note">128</td><td class="td-note">132</td>
-              <td class="td-note">136</td><td class="td-note">140</td><td class="td-note">144</td><td class="td-note">148</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="size-unit">All measurements in cm — lay flat</p>
+      <!-- TEE panel -->
+      <div class="size-tab-panel active" id="size-panel-tee">
+        <div class="size-intro reveal rd3">
+          <p class="size-note">
+            All measurements are in <strong>centimetres (cm)</strong>.
+            The Reversible Tee is cut oversized — if you prefer a closer fit, size down.
+            Measurements taken flat on a table.
+          </p>
+          <ul class="measure-list">
+            <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
+            <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
+            <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
+            <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
+          </ul>
+        </div>
+        <div class="size-table-wrap reveal rd4">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Measurement</th>
+                <th>XXS</th><th>XS</th><th>S</th><th>M</th>
+                <th>L</th><th>XL</th><th>XXL</th><th>XXXL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="td-letter">A</span>Length HSP</td>
+                <td class="td-val">62.5</td><td class="td-val">64.5</td><td class="td-val">66.5</td><td class="td-val">68.5</td>
+                <td class="td-val">70.5</td><td class="td-val">72.5</td><td class="td-val">74.5</td><td class="td-val">76.5</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter">B</span>½ Chest</td>
+                <td class="td-val">55</td><td class="td-val">57</td><td class="td-val">59</td><td class="td-val">61</td>
+                <td class="td-val">63</td><td class="td-val">65</td><td class="td-val">67</td><td class="td-val">69</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter">C</span>½ Hem</td>
+                <td class="td-val">53.5</td><td class="td-val">55.5</td><td class="td-val">57.5</td><td class="td-val">59.5</td>
+                <td class="td-val">61.5</td><td class="td-val">63.5</td><td class="td-val">65.5</td><td class="td-val">67.5</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter">D</span>Sleeve Length</td>
+                <td class="td-val">24</td><td class="td-val">24.5</td><td class="td-val">25</td><td class="td-val">25.5</td>
+                <td class="td-val">26</td><td class="td-val">26.5</td><td class="td-val">27</td><td class="td-val">27.5</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="size-unit">All measurements in cm — lay flat</p>
+        </div>
       </div>
+
+      <!-- HOODIE panel -->
+      <div class="size-tab-panel" id="size-panel-hoodie">
+        <div class="size-intro">
+          <p class="size-note">
+            All measurements are in <strong>centimetres (cm)</strong>.
+            The Reversible Hoodie is cut oversized — if you prefer a closer fit, size down.
+            Measurements taken flat on a table.
+          </p>
+          <ul class="measure-list">
+            <li><span class="measure-key">A</span> Length from High Shoulder Point (HSP) to hem</li>
+            <li><span class="measure-key">B</span> Half chest — measured 2 cm below armhole</li>
+            <li><span class="measure-key">C</span> Half hem — measured at the bottom opening</li>
+            <li><span class="measure-key">D</span> Sleeve length — from shoulder seam to cuff</li>
+          </ul>
+        </div>
+        <div class="size-table-wrap">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Measurement</th>
+                <th>XXS</th><th>XS</th><th>S</th><th>M</th>
+                <th>L</th><th>XL</th><th>XXL</th><th>XXXL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="td-letter">A</span>Length HSP</td>
+                <td class="td-val">61</td><td class="td-val">63</td><td class="td-val">65</td><td class="td-val">67</td>
+                <td class="td-val">69</td><td class="td-val">71</td><td class="td-val">73</td><td class="td-val">75</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter">B</span>½ Chest</td>
+                <td class="td-val">60</td><td class="td-val">62</td><td class="td-val">64</td><td class="td-val">66</td>
+                <td class="td-val">68</td><td class="td-val">70</td><td class="td-val">72</td><td class="td-val">74</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter">C</span>½ Hem</td>
+                <td class="td-val">37</td><td class="td-val">39</td><td class="td-val">41</td><td class="td-val">43</td>
+                <td class="td-val">45</td><td class="td-val">47</td><td class="td-val">49</td><td class="td-val">51</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter">D</span>Sleeve Length</td>
+                <td class="td-val">56</td><td class="td-val">57.5</td><td class="td-val">59</td><td class="td-val">60.5</td>
+                <td class="td-val">62</td><td class="td-val">63.5</td><td class="td-val">65</td><td class="td-val">66.5</td>
+              </tr>
+              <tr>
+                <td><span class="td-letter"></span>Full Chest</td>
+                <td class="td-note">120</td><td class="td-note">124</td><td class="td-note">128</td><td class="td-note">132</td>
+                <td class="td-note">136</td><td class="td-note">140</td><td class="td-note">144</td><td class="td-note">148</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="size-unit">All measurements in cm — lay flat</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1235,6 +1362,21 @@
 
     input.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') submitBtn.click();
+    });
+  })();
+
+  /* ─── Size Guide tabs ───────────────────────────────── */
+  (function() {
+    var btns   = document.querySelectorAll('.size-tab-btn');
+    var panels = document.querySelectorAll('.size-tab-panel');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var tab = btn.getAttribute('data-tab');
+        btns.forEach(function(b) { b.classList.remove('active'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        document.getElementById('size-panel-' + tab).classList.add('active');
+      });
     });
   })();
 
