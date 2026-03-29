@@ -837,21 +837,6 @@
   }
   #cs-inline-notify-success.show { display: block; }
 
-  /* ─── Mobile plasma fallback (CSS gradient replaces WebGL) ─ */
-  @keyframes mobilePlasmaBg {
-    0%   { background-position: 0% 40%; }
-    50%  { background-position: 100% 60%; }
-    100% { background-position: 0% 40%; }
-  }
-  .mobile-plasma {
-    background: linear-gradient(-55deg,
-      #080818 0%, #150430 25%, #220650 50%,
-      #0d0025 75%, #1a0840 100%) !important;
-    background-size: 500% 500% !important;
-    animation: mobilePlasmaBg 10s ease infinite;
-  }
-  .mobile-plasma .shader-canvas { display: none !important; }
-
   /* Password modal */
   #cs-modal-bg {
     position: fixed; inset: 0; z-index: 100001;
@@ -1659,6 +1644,13 @@ void main() {
   gl_FragColor = col;
 }`;
 
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    // Mobile uses a lighter shader: 6 lines instead of 10
+    var FS_MOBILE = FS
+      .replace('for (int l = 0; l < 10; l++)', 'for (int l = 0; l < 6; l++)')
+      .replace('float ni = float(l) / 10.0;', 'float ni = float(l) / 6.0;');
+
     function initShader(canvas) {
       if (!canvas) return function(){};
       var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
@@ -1672,7 +1664,7 @@ void main() {
         return s;
       }
       var vs = mkShader(gl.VERTEX_SHADER, VS);
-      var fs = mkShader(gl.FRAGMENT_SHADER, FS);
+      var fs = mkShader(gl.FRAGMENT_SHADER, isMobile ? FS_MOBILE : FS);
       if (!vs || !fs) return function(){};
       var prog = gl.createProgram();
       gl.attachShader(prog, vs);
@@ -1688,18 +1680,24 @@ void main() {
       var resLoc  = gl.getUniformLocation(prog, 'iRes');
       var timeLoc = gl.getUniformLocation(prog, 'iTime');
 
+      // Mobile: 1/3 resolution; Desktop: 1/2
+      var resDiv = isMobile ? 3 : 2;
       function resize() {
         var w = canvas.offsetWidth, h = canvas.offsetHeight;
         if (!w || !h) return;
-        canvas.width  = Math.floor(w / 2);
-        canvas.height = Math.floor(h / 2);
+        canvas.width  = Math.floor(w / resDiv);
+        canvas.height = Math.floor(h / resDiv);
         gl.viewport(0, 0, canvas.width, canvas.height);
       }
       window.addEventListener('resize', resize);
       resize();
 
-      var t0 = Date.now(), raf;
-      function draw() {
+      var t0 = Date.now(), raf, lastFrame = 0;
+      var frameCap = isMobile ? 33 : 0; // 30fps on mobile, uncapped on desktop
+      function draw(now) {
+        raf = requestAnimationFrame(draw);
+        if (frameCap && now - lastFrame < frameCap) return;
+        lastFrame = now;
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.useProgram(prog);
         gl.uniform2f(resLoc, canvas.width, canvas.height);
@@ -1708,9 +1706,8 @@ void main() {
         gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(posLoc);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        raf = requestAnimationFrame(draw);
       }
-      draw();
+      requestAnimationFrame(draw);
 
       return function() {
         cancelAnimationFrame(raf);
@@ -1718,20 +1715,10 @@ void main() {
       };
     }
 
-    var isMobile = window.matchMedia('(max-width: 767px)').matches;
-    if (isMobile) {
-      document.getElementById('cs-overlay').classList.add('mobile-plasma');
-      window._csShaderStop = function(){};
-      window._heroShaderStart = function() {
-        var hero = document.getElementById('hero');
-        if (hero) hero.classList.add('mobile-plasma');
-      };
-    } else {
-      window._csShaderStop = initShader(document.getElementById('shader-cs'));
-      window._heroShaderStart = function() {
-        initShader(document.getElementById('shader-hero'));
-      };
-    }
+    window._csShaderStop = initShader(document.getElementById('shader-cs'));
+    window._heroShaderStart = function() {
+      initShader(document.getElementById('shader-hero'));
+    };
   })();
 
   /* ─── Email signup ───────────────────────────────────── */
