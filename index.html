@@ -1448,11 +1448,21 @@
       indicator.style.transform = 'translateX(' + btn.offsetLeft + 'px)';
     }
 
-    // Init without transition
-    indicator.style.transition = 'none';
-    moveIndicator(document.querySelector('.size-tab-btn.active'));
-    layout();
-    requestAnimationFrame(function() { indicator.style.transition = ''; });
+    // Init after fonts are ready — Bebas Neue changes button widths on load,
+    // which would cause the indicator to animate to the correct position visibly.
+    function initIndicator() {
+      indicator.style.transition = 'none';
+      moveIndicator(document.querySelector('.size-tab-btn.active'));
+      layout();
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() { indicator.style.transition = ''; });
+      });
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(initIndicator);
+    } else {
+      initIndicator();
+    }
 
     window.addEventListener('resize', layout);
 
