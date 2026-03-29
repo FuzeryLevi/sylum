@@ -460,13 +460,25 @@
       background: var(--acc);
       color: #fff;
     }
-    .size-tab-panel { display: none; }
-    .size-tab-panel.active { display: block; }
+    .size-mockup-img {
+      display: block;
+      max-height: 320px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.88;
+    }
+
+    .size-tabs-viewport { overflow: hidden; }
+    .size-tabs-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .size-tab-panel { flex: 0 0 100%; min-width: 0; }
 
     .size-intro {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      grid-template-columns: auto 1fr 1fr;
+      gap: 56px;
       align-items: start;
       margin-bottom: 56px;
     }
@@ -638,7 +650,8 @@
       .section-title { margin-bottom: 40px; }
       .product-grid { grid-template-columns: 1fr; gap: 20px; }
       .card-img { height: 280px; }
-      .size-intro { grid-template-columns: 1fr; gap: 40px; }
+      .size-intro { grid-template-columns: 1fr; gap: 32px; }
+      .size-mockup-img { max-height: 240px; }
       .cta-inner { padding: 80px 24px; }
       footer { flex-direction: column; text-align: center; gap: 24px; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -702,13 +715,14 @@
     line-height: 1;
     margin-bottom: 28px;
     opacity: 0;
+    text-shadow: 0 0 60px rgba(180,140,255,0.4), 0 2px 32px rgba(0,0,0,0.6);
   }
   #cs-tagline {
     font-size: clamp(0.85rem, 2.5vw, 1.15rem);
     font-weight: 400;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.72);
     margin-bottom: 10px;
     animation: fadeUp 0.9s 0.25s both;
   }
@@ -716,7 +730,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(1.4rem, 5vw, 2.6rem);
     letter-spacing: 0.14em;
-    color: #EC407A;
+    color: #C084FC;
     margin-bottom: 40px;
     animation: fadeUp 0.9s 0.35s both;
   }
@@ -1043,9 +1057,14 @@
         <button class="size-tab-btn" data-tab="hoodie">Reversible Hoodie</button>
       </div>
 
+      <!-- Panels slider -->
+      <div class="size-tabs-viewport">
+      <div class="size-tabs-track">
+
       <!-- TEE panel -->
-      <div class="size-tab-panel active" id="size-panel-tee">
+      <div class="size-tab-panel" id="size-panel-tee">
         <div class="size-intro reveal rd3">
+          <img class="size-mockup-img" src="mockups/dsd3-29_132758-removebg-preview.png" alt="Reversible Tee measurement diagram" />
           <p class="size-note">
             All measurements are in <strong>centimetres (cm)</strong>.
             The Reversible Tee is cut oversized — if you prefer a closer fit, size down.
@@ -1096,7 +1115,9 @@
 
       <!-- HOODIE panel -->
       <div class="size-tab-panel" id="size-panel-hoodie">
+
         <div class="size-intro">
+          <img class="size-mockup-img" src="mockups/Képernyőkép_202dsada6-03-29_132841-removebg-preview.png" alt="Reversible Hoodie measurement diagram" />
           <p class="size-note">
             All measurements are in <strong>centimetres (cm)</strong>.
             The Reversible Hoodie is cut oversized — if you prefer a closer fit, size down.
@@ -1149,6 +1170,9 @@
           <p class="size-unit">All measurements in cm — lay flat</p>
         </div>
       </div>
+
+      </div><!-- /size-tabs-track -->
+      </div><!-- /size-tabs-viewport -->
 
     </div>
   </section>
@@ -1380,15 +1404,14 @@
 
   /* ─── Size Guide tabs ───────────────────────────────── */
   (function() {
-    var btns   = document.querySelectorAll('.size-tab-btn');
-    var panels = document.querySelectorAll('.size-tab-panel');
+    var btns  = document.querySelectorAll('.size-tab-btn');
+    var track = document.querySelector('.size-tabs-track');
     btns.forEach(function(btn) {
       btn.addEventListener('click', function() {
-        var tab = btn.getAttribute('data-tab');
         btns.forEach(function(b) { b.classList.remove('active'); });
-        panels.forEach(function(p) { p.classList.remove('active'); });
         btn.classList.add('active');
-        document.getElementById('size-panel-' + tab).classList.add('active');
+        var idx = btn.getAttribute('data-tab') === 'tee' ? 0 : 1;
+        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
       });
     });
   })();
