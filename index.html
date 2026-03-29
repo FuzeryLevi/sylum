@@ -1680,8 +1680,9 @@ void main() {
       var resLoc  = gl.getUniformLocation(prog, 'iRes');
       var timeLoc = gl.getUniformLocation(prog, 'iTime');
 
-      // Mobile: 1/3 resolution; Desktop: 1/2
-      var resDiv = isMobile ? 3 : 2;
+      // Mobile: full CSS resolution (no divisor) — avoids pixelation on high-DPR screens
+      // Desktop: 1/2 resolution (4x fewer pixels to shade)
+      var resDiv = isMobile ? 1 : 2;
       function resize() {
         var w = canvas.offsetWidth, h = canvas.offsetHeight;
         if (!w || !h) return;
