@@ -916,6 +916,7 @@
   <img id="nav-logo" src="logo-pink.png" alt="SYLUM" />
   <ul class="nav-links">
     <li><a href="#products">Collection</a></li>
+    <li><a href="#sizes">Size Guide</a></li>
     <li><a href="#join">Join</a></li>
   </ul>
   <button class="nav-cart" aria-label="Cart">
@@ -1144,19 +1145,16 @@
     data-logo="logo-black.png"
     data-logo-invert="1">
     <div class="cta-inner">
-      <div class="cta-badge reveal">10% Off Your First Order</div>
       <h2 class="cta-title reveal rd1">JOIN<br>THE LIST.</h2>
       <p class="cta-sub reveal rd2">
-        Get early access to every drop — 24 hours before anyone else.<br>
-        Plus <strong>10% off</strong> your first order when you sign up.
+        Get early access to every drop — 24 hours before anyone else.
       </p>
       <form class="cta-form reveal rd3" onsubmit="handleSignup(event)" aria-label="Email signup">
         <input type="email" class="cta-input" id="email-input" placeholder="your@email.com" aria-label="Email" autocomplete="email" required />
-        <button type="submit" class="cta-submit">GET 10% OFF</button>
+        <button type="submit" class="cta-submit">JOIN NOW</button>
       </form>
       <p class="cta-legal reveal rd4">
-        By signing up you agree to receive drop alerts from SYLUM.<br>
-        <span>10% discount</span> applies to your first purchase. No spam, ever.
+        By signing up you agree to receive drop alerts from SYLUM. No spam, ever.
       </p>
     </div>
   </section>
@@ -1520,7 +1518,7 @@
 
     /* After 3s reset */
     setTimeout(function() {
-      btn.textContent = 'GET 10% OFF';
+      btn.textContent = 'JOIN NOW';
       input.placeholder = 'your@email.com';
       input.disabled = false;
       btn.disabled = false;
