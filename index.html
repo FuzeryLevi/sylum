@@ -697,50 +697,87 @@
   #cs-pw-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
 
   /* Discount popup */
-  #cs-discount-popup {
+  #cs-notify-popup {
     position: absolute;
     bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: #1a1a1a;
-    border: 1px solid rgba(236,64,122,0.3);
-    border-radius: 14px;
-    padding: 20px 28px;
-    display: flex; align-items: center; gap: 16px;
-    white-space: nowrap;
+    background: #161616;
+    border: 1px solid rgba(236,64,122,0.28);
+    border-radius: 16px;
+    padding: 24px 28px 22px;
+    width: min(420px, calc(100vw - 32px));
     opacity: 0;
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
     z-index: 100000;
   }
-  #cs-discount-popup.show {
+  #cs-notify-popup.show {
     opacity: 1; transform: translateX(-50%) translateY(0);
     pointer-events: all;
   }
-  .cs-disc-icon {
-    font-size: 1.4rem; line-height: 1; flex-shrink: 0;
-  }
-  .cs-disc-text {
-    display: flex; flex-direction: column; gap: 3px;
-  }
-  .cs-disc-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.15rem; letter-spacing: 0.08em;
-    color: #EC407A;
-  }
-  .cs-disc-sub {
-    font-size: 0.65rem; letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.45);
-  }
-  .cs-disc-close {
+  .cs-notify-close {
+    position: absolute; top: 14px; right: 16px;
     background: none; border: none; cursor: pointer;
-    color: rgba(255,255,255,0.25); font-size: 1rem;
-    padding: 4px; margin-left: 8px;
-    transition: color 0.2s;
-    align-self: flex-start;
+    color: rgba(255,255,255,0.2); font-size: 1rem;
+    transition: color 0.2s; padding: 4px;
   }
-  .cs-disc-close:hover { color: rgba(255,255,255,0.6); }
+  .cs-notify-close:hover { color: rgba(255,255,255,0.5); }
+  .cs-notify-tag {
+    display: inline-block;
+    font-size: 0.52rem; font-weight: 700;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: #EC407A;
+    border: 1px solid rgba(236,64,122,0.4);
+    border-radius: 100px;
+    padding: 4px 10px;
+    margin-bottom: 12px;
+  }
+  .cs-notify-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.06em;
+    color: #fff; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .cs-notify-sub {
+    font-size: 0.68rem; letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.38);
+    margin-bottom: 16px; line-height: 1.5;
+  }
+  .cs-notify-form {
+    display: flex; gap: 0;
+  }
+  .cs-notify-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 12px 14px;
+    font-family: inherit; font-size: 0.82rem;
+    color: #fff; outline: none;
+    transition: border-color 0.2s;
+  }
+  .cs-notify-input::placeholder { color: rgba(255,255,255,0.22); }
+  .cs-notify-input:focus { border-color: rgba(236,64,122,0.4); }
+  .cs-notify-submit {
+    background: #EC407A; border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 18px;
+    font-family: inherit; font-size: 0.62rem;
+    font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #fff;
+    cursor: pointer; white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .cs-notify-submit:hover { opacity: 0.82; }
+  .cs-notify-success {
+    font-size: 0.7rem; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.45);
+    margin-top: 10px; display: none;
+  }
+  .cs-notify-success.show { display: block; }
 
   @media (max-width: 580px) {
-    #cs-discount-popup { bottom: 24px; padding: 16px 18px; gap: 12px; white-space: normal; max-width: calc(100vw - 32px); }
+    #cs-notify-popup { bottom: 24px; padding: 20px 20px 18px; }
   }
 
   /* Password modal */
@@ -834,13 +871,16 @@
     </div>
   </div>
   <!-- Discount popup -->
-  <div id="cs-discount-popup">
-    <div class="cs-disc-icon">🏷️</div>
-    <div class="cs-disc-text">
-      <div class="cs-disc-title">10% off — exclusive access</div>
-      <div class="cs-disc-sub">Early access members get 10% off on launch day.</div>
+  <div id="cs-notify-popup">
+    <button class="cs-notify-close" aria-label="Close">✕</button>
+    <div class="cs-notify-tag">10% off — early access</div>
+    <div class="cs-notify-title">Be the first to know</div>
+    <div class="cs-notify-sub">Drop your email and get 10% off on launch day.<br>No spam, ever.</div>
+    <div class="cs-notify-form">
+      <input class="cs-notify-input" type="email" placeholder="your@email.com" autocomplete="email" />
+      <button class="cs-notify-submit">Notify me</button>
     </div>
-    <button class="cs-disc-close" aria-label="Close">✕</button>
+    <div class="cs-notify-success">You're in! 🎉 We'll reach out before launch.</div>
   </div>
 </div>
 
@@ -914,7 +954,7 @@
           <div class="card-img"><span>Photo coming soon</span></div>
           <div class="card-tag">SS25 — Drop 001</div>
           <h3 class="card-name">SYLUM<br>DRIP TEE</h3>
-          <p class="card-price">€69</p>
+          <p class="card-price">13 000 Ft</p>
           <div class="card-divider"></div>
           <ul class="card-features">
             <li>280gsm heavyweight cotton</li>
@@ -923,7 +963,7 @@
             <li>Sizes XXS — XXXL</li>
             <li>Black / Off White / Ash Grey</li>
           </ul>
-          <button class="btn btn-fill add-to-basket" data-product="SYLUM DRIP TEE — €69">Add to Basket</button>
+          <button class="btn btn-fill add-to-basket" data-product="SYLUM DRIP TEE — 13 000 Ft">Add to Basket</button>
         </article>
 
         <!-- HOODIE -->
@@ -931,7 +971,7 @@
           <div class="card-img"><span>Photo coming soon</span></div>
           <div class="card-tag">SS25 — Drop 002</div>
           <h3 class="card-name">SYLUM<br>REVERSIBLE<br>HOODIE</h3>
-          <p class="card-price">€149</p>
+          <p class="card-price">26 000 Ft</p>
           <div class="card-divider"></div>
           <ul class="card-features">
             <li>500gsm French terry — premium weight</li>
@@ -940,7 +980,7 @@
             <li>Side B: Purple / Black drip logo</li>
             <li>Sizes XXS — XXXL</li>
           </ul>
-          <button class="btn btn-fill add-to-basket" data-product="SYLUM REVERSIBLE HOODIE — €149">Add to Basket</button>
+          <button class="btn btn-fill add-to-basket" data-product="SYLUM REVERSIBLE HOODIE — 26 000 Ft">Add to Basket</button>
         </article>
 
       </div>
@@ -1215,13 +1255,34 @@
     });
   })();
 
-  /* ─── Discount popup (coming soon) ─────────────────── */
+  /* ─── Notify popup (coming soon) ───────────────────── */
   (function() {
-    var popup    = document.getElementById('cs-discount-popup');
-    var closeBtn = popup.querySelector('.cs-disc-close');
+    var popup    = document.getElementById('cs-notify-popup');
+    var closeBtn = popup.querySelector('.cs-notify-close');
+    var input    = popup.querySelector('.cs-notify-input');
+    var submitBtn= popup.querySelector('.cs-notify-submit');
+    var success  = popup.querySelector('.cs-notify-success');
+
     setTimeout(function() { popup.classList.add('show'); }, 1500);
+
     closeBtn.addEventListener('click', function() {
       popup.classList.remove('show');
+    });
+
+    submitBtn.addEventListener('click', function() {
+      var email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        input.style.borderColor = 'rgba(239,68,68,0.6)';
+        setTimeout(function() { input.style.borderColor = ''; }, 1000);
+        return;
+      }
+      // TODO: send email to backend / Mailchimp / etc.
+      popup.querySelector('.cs-notify-form').style.display = 'none';
+      success.classList.add('show');
+    });
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitBtn.click();
     });
   })();
 
