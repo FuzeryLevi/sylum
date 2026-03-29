@@ -1718,7 +1718,7 @@ void main() {
       };
     }
 
-    var isMobile = navigator.maxTouchPoints > 0 || ('ontouchstart' in window);
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
     if (isMobile) {
       document.getElementById('cs-overlay').classList.add('mobile-plasma');
       window._csShaderStop = function(){};
