@@ -749,7 +749,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(1.4rem, 5vw, 2.6rem);
     letter-spacing: 0.14em;
-    color: #EC407A;
+    color: rgba(255,255,255,0.85);
     margin-bottom: 40px;
     animation: fadeUp 0.9s 0.35s both;
   }
@@ -818,9 +818,9 @@
     transition: border-color 0.2s;
   }
   #cs-inline-notify-input::placeholder { color: rgba(255,255,255,0.22); }
-  #cs-inline-notify-input:focus { border-color: rgba(236,64,122,0.4); }
+  #cs-inline-notify-input:focus { border-color: rgba(255,255,255,0.3); }
   #cs-inline-notify-submit {
-    background: #EC407A; border: none;
+    background: #000; border: 1px solid rgba(255,255,255,0.15);
     border-radius: 0 8px 8px 0;
     padding: 13px 20px;
     font-family: inherit; font-size: 0.6rem;
@@ -872,7 +872,7 @@
     transition: border-color 0.2s;
     letter-spacing: 0.06em;
   }
-  #cs-pw-input:focus { border-color: rgba(236,64,122,0.5); }
+  #cs-pw-input:focus { border-color: rgba(255,255,255,0.3); }
   #cs-pw-input.error { border-color: #EF4444; animation: shake 0.35s; }
   @keyframes shake {
     0%,100% { transform: none; }
@@ -886,8 +886,8 @@
     transition: opacity 0.2s;
   }
   #cs-pw-submit {
-    background: #EC407A;
-    border: none; border-radius: 8px;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
     padding: 14px;
     font-family: inherit; font-size: 0.7rem;
     font-weight: 700; letter-spacing: 0.2em;
@@ -1018,7 +1018,7 @@
             <li>280gsm heavyweight cotton</li>
             <li>Oversized boxy fit</li>
             <li>Reversible logo embroidered — left chest</li>
-            <li>Sizes XXS — XXXL</li>
+            <li>Sizes XS — XL</li>
             <li>Black / Off White / Ash Grey</li>
           </ul>
           <div class="card-action">
@@ -1044,7 +1044,7 @@
             <li>Oversized boxy cut, no zipper</li>
             <li>Side A: Black / Purple drip logo</li>
             <li>Side B: Purple / Black drip logo</li>
-            <li>Sizes XXS — XXXL</li>
+            <li>Sizes XS — XL</li>
           </ul>
           <div class="card-action">
             <select class="size-select" aria-label="Select size">
