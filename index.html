@@ -1360,7 +1360,10 @@
         modalBg.classList.remove('open');
         document.body.classList.remove('cs-active');
         if (typeof window._csShaderStop === 'function') window._csShaderStop();
-        setTimeout(function() { overlay.style.display = 'none'; }, 650);
+        setTimeout(function() {
+          overlay.style.display = 'none';
+          if (typeof window._heroShaderStart === 'function') window._heroShaderStart();
+        }, 650);
         requestAnimationFrame(function() {
           var heroTitle = document.querySelector('.hero-title');
           if (heroTitle) crunchLetters(heroTitle, 0.05, 2000);
@@ -1592,7 +1595,7 @@
   /* ─── WebGL Plasma Shader ────────────────────────────── */
   (function() {
     var VS = 'attribute vec4 aPos;\nvoid main(){ gl_Position = aPos; }';
-    var FS = `precision highp float;
+    var FS = `precision mediump float;
 uniform vec2 iRes;
 uniform float iTime;
 const float lineSpeed = 0.2;
@@ -1623,8 +1626,8 @@ void main() {
   sp.y += random(sp.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + hf);
   sp.x += random(sp.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * hf;
   vec4 lines = vec4(0.0);
-  for (int l = 0; l < 16; l++) {
-    float ni = float(l) / 16.0;
+  for (int l = 0; l < 10; l++) {
+    float ni = float(l) / 10.0;
     float ot = iTime * offsetSpeed;
     float op = float(l) + sp.x * offsetFrequency;
     float r = random(op + ot) * 0.5 + 0.5;
@@ -1675,8 +1678,9 @@ void main() {
       function resize() {
         var w = canvas.offsetWidth, h = canvas.offsetHeight;
         if (!w || !h) return;
-        canvas.width = w; canvas.height = h;
-        gl.viewport(0, 0, w, h);
+        canvas.width  = Math.floor(w / 2);
+        canvas.height = Math.floor(h / 2);
+        gl.viewport(0, 0, canvas.width, canvas.height);
       }
       window.addEventListener('resize', resize);
       resize();
@@ -1702,7 +1706,9 @@ void main() {
     }
 
     window._csShaderStop = initShader(document.getElementById('shader-cs'));
-    initShader(document.getElementById('shader-hero'));
+    window._heroShaderStart = function() {
+      initShader(document.getElementById('shader-hero'));
+    };
   })();
 
   /* ─── Email signup ───────────────────────────────────── */
